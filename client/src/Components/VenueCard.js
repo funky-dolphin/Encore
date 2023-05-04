@@ -1,7 +1,7 @@
 import React from 'react';
 
 const VenueCard = ({venue})=>{
-    console.log(venue)
+    // console.log(venue)
     return(
         <div className="bg-white rounded shadow-md p-4">
         <img src={venue.imageUrl} alt={venue.name} className="w-full h-48 rounded mb-4"

@@ -5,16 +5,10 @@ import APIKEY from '../config'
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 
-const CitySearch = ({userCity, username}) => {
+const CitySearch = ({userCity, username, setUser}) => {
   const [city, setCity] = useState('New York');
   const [events, setEvents] = useState([])
   const [page, setPage] = useState(0)
-
-  const carouselImages = [
-    'https://img.buzzfeed.com/buzzfeed-static/static/2017-01/25/11/asset/buzzfeed-prod-fastlane-03/sub-buzz-27248-1485361539-3.jpg?downsize=700%3A%2A&output-quality=auto&output-format=auto',
-    'https://img.buzzfeed.com/buzzfeed-static/static/2017-01/25/14/asset/buzzfeed-prod-fastlane-02/sub-buzz-29349-1485371354-1.jpg?downsize=600:*&output-format=auto&output-quality=auto',
-    'https://img.buzzfeed.com/buzzfeed-static/static/2017-01/25/14/asset/buzzfeed-prod-fastlane-02/sub-buzz-29327-1485371470-4.jpg?downsize=600:*&output-format=auto&output-quality=auto',
-  ]
 
   useEffect(() => {
     console.log(userCity)
@@ -36,7 +30,7 @@ const CitySearch = ({userCity, username}) => {
       .then(response => response.json())
       .then(data => {
         console.log(data)
-        const events = data._embedded.events;
+        const events= data._embedded.events;
         const basicEventData = events
           .map(event => {
             const venue = event._embedded.venues[0];
@@ -70,6 +64,7 @@ const CitySearch = ({userCity, username}) => {
           .slice(0, 3);
         console.log(basicEventData);
         setEvents(basicEventData)
+        console.log(events)
       })
       .catch(error => console.log(error));
   };
@@ -93,17 +88,16 @@ const CitySearch = ({userCity, username}) => {
     <div className="w-full min-h-screen flex flex-col items-center justify-center space-y-8 bg-white text-black">
     <form onSubmit={handleSearch} className="w-full max-w-md">
     <div
-      className="w-full bg-center bg-contain bg-no-repeat"
-      style={{
-        backgroundImage:
-        `url(${process.env.PUBLIC_URL}/Rock-Concert.jpeg)`,
-        width: '100vw',
-        marginLeft: 'calc(-50vw + 50%)',
-        paddingTop: 'calc(90 / 150 * 50vw)', // Set the height based on the aspect ratio of the image
-        maxHeight: '50px', // Set a maximum height for the image container
-      }}
-    />
-        <div className="flex items-center border-b border-b-2 border-red-500 py-2">
+  className="w-full bg-center bg-contain bg-no-repeat"
+  style={{
+    backgroundImage: `url(${process.env.PUBLIC_URL}/Rock-Concert.jpeg)`,
+    width: '100vw',
+    height: '60vh', // Set the height to 100% of the viewport height
+    marginLeft: 'calc(-50vw + 50%)',
+  }}
+/>
+ 
+        <div className="flex items-center border-b-2 border-red-500 py-2">
           <input
             className="appearance-none bg-transparent border-none w-full text-black mr-3 py-1 px-2 leading-tight focus:outline-none"
             type="text"

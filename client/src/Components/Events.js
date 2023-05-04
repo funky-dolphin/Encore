@@ -4,10 +4,19 @@ import {Link} from 'react-router-dom'
 import APIKEY from '../config'
 
 
-const Concerts = ({user}) => {
+const Concerts = ({user, setUser}) => {
   const [events, setEvents] = useState([]);
   const [keyword, setKeyword] = useState('');
   const [currentPage, setCurrentPage] = useState(0)
+
+  useEffect(() => {
+    fetch("/check_session", {
+    }).then((response) => {
+      if (response.ok) {
+        response.json().then((user) => setUser(user));
+      }
+    });
+  }, []);
 
   console.log(user)
 
@@ -24,7 +33,7 @@ const Concerts = ({user}) => {
         console.log(data)
         const events = data._embedded.events;
         const basicEventData = events.map(event => {
-            const venue = events[0]._embedded.venues[0];
+            const venue = event._embedded.venues[0];
             const imageUrl = event.images.find(image => image.ratio === '16_9' && image.width > '1000').url;
           let artistName = 'Unknown';
           if (event.lineup && event.lineup.length > 0) {
@@ -71,9 +80,9 @@ const Concerts = ({user}) => {
     fetchEvents();
   };
 const isUserSignedIn = !!user
-  useEffect(() => {
+  useEffect((isUserSignedIn) => {
     fetchEvents(isUserSignedIn, currentPage); // Fetch events on initial render
-  }, [currentPage]);
+  }, [currentPage, isUserSignedIn]);
 
   return (
     <div>

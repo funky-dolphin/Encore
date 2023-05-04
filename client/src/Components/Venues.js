@@ -3,44 +3,52 @@ import VenueCard from './VenueCard';
 import {Link} from 'react-router-dom'
 import APIKEY from '../config';
 
-function Venues(){
+function Venues({user}){
     const [venues, setVenues] = useState([])
     
     const [keyword, setKeyword] = useState('');
 
+    console.log(user)
 
+    const fetchVenues = (isUserSignedIn) => {
+      const apiURL = isUserSignedIn
+        ? `https://app.ticketmaster.com/discovery/v2/venues.json?apikey=${APIKEY}&keyword=${user.city}`
+        : `https://app.ticketmaster.com/discovery/v2/venues.json?apikey=${APIKEY}&keyword=${keyword}`;
     
+      fetch(apiURL)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          const venues = data._embedded.venues;
+          const venueDetails = venues.map(venue => {
+            console.log(venue);
+            const venueImage = venue.images ? venue.images.find(image => image.ratio === '16_9')?.url : null;
+    
+            return {
+              id: venue.id,
+              name: venue.name,
+              state: venue.state?.stateCode || 'N/A',
+              city: venue.city?.name || 'N/A',
+              address: venue.address?.line1 || 'N/A',
+              imageUrl: venueImage || 'No image available'
+            };
+          });
+    
+          setVenues(venueDetails);
+        })
+        .catch(error => {
+          console.error('Error fetching venues:', error);
+        });
+    };
 
+const isUserSignedIn = !!user
+// useEffect(()=>{
+//     fetchVenues();
+// }, [])
 
-    const fetchVenues = () =>{
-    fetch(`https://app.ticketmaster.com/discovery/v2/venues.json?apikey=${APIKEY}&keyword=${keyword}`)
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-  
-      const venues = data._embedded.venues;
-      const venueDetails = venues.map(venue => {
-        console.log(venue)
-        const venueImage = venue.images ? venue.images.find(image => image.ratio === '16_9')?.url : null;
-        
-        return {
-            id: venue.id,
-            name: venue.name,
-            state: venue.state?.stateCode || 'N/A',
-            city: venue.city?.name || 'N/A',
-            address: venue.address?.line1 || 'N/A',
-            imageUrl: venueImage || 'No image available'
-        };
-      });
-  
-      setVenues(venueDetails);
-     
-    })
-    .catch(error => console.log(error));
-}
-useEffect(()=>{
-    fetchVenues();
-}, [])
+useEffect(() => {
+    fetchVenues(isUserSignedIn);
+}, []);
 
 const handleKeywordChange = (e) => {
     setKeyword(e.target.value);

@@ -34,11 +34,11 @@ function App() {
     <BrowserRouter>
     <Navbar setUser={setUser} user={user} />
     <Routes>
-      <Route path="/" element={<CitySearch userCity={user?.city} username={user?.username} />} />
+      <Route path="/" element={<CitySearch userCity={user?.city} username={user?.username} setUser={setUser} />} />
       <Route path="/login" element={<Login setUser={setUser} user={user} />} />
       <Route path="/signup" element={<Signup setUser={setUser} />} />
       <Route path = "/events" element={<Events setUser={setUser} user={user} />}/>
-      <Route path = '/venues' element= {<Venues />}/>
+      <Route path = '/venues' element= {<Venues user = {user} setUser = {setUser}/>} />
       <Route path='/venue/:id' element={<VenueDetail />} />
       <Route path = '/event/:id' element={<ConcertDetails/>}/>
     </Routes>
