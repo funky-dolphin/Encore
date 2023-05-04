@@ -6,7 +6,8 @@ function Signup({setUser}) {
   const [signupUsername, setSignupUsername] = useState("")
   const [signupEmail, setSignupEmail] = useState("")
   const [signupPassword, setSignupPassword] = useState("")
-  const [signupZip, setSignupZip] = useState("")
+  const [signupCity, setSignupCity] = useState("")
+  const [signupAddress, setSignupAddress] = useState("")
   const navigate = useNavigate()
 
   function handleSignupSubmit(e){
@@ -15,7 +16,8 @@ function Signup({setUser}) {
       username : signupUsername, 
       email: signupEmail, 
       _password_hash: signupPassword, 
-      zipcode: signupZip
+      city: signupCity,
+      address: signupAddress
     }
     fetch("http://127.0.0.1:5555/signup", {
       method: "POST",
@@ -61,21 +63,32 @@ function Signup({setUser}) {
               Password
             </label>
             <input onChange = {(e)=> setSignupPassword(e.target.value)}
-              className="appearance-none bg-gray-800 rounded w-full py-2 px-3 text-white mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              className="appearance-none bg-gray-800 rounded w-full py-2 px-3 text-white mb-1 leading-tight focus:outline-none focus:shadow-outline"
               id="password"
               type="password"
-              placeholder="******************"
+              placeholder="*************"
             />
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-bold mb-2 text-gray-400" htmlFor="zipcode">
-              Zip Code
+            <label className="block text-sm font-bold mb-2 text-gray-400" htmlFor="city">
+              City
             </label>
-            <input onChange = {(e)=> setSignupZip(e.target.value)}
+            <input onChange = {(e)=> setSignupCity(e.target.value)}
               className="appearance-none bg-gray-800 rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
-              id="zipcode"
+              id="city"
               type="text"
-              placeholder="Zip Code"
+              placeholder="City"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-bold mb-2 text-gray-400" htmlFor="address">
+              Address
+            </label>
+            <input onChange = {(e)=> setSignupAddress(e.target.value)}
+              className="appearance-none bg-gray-800 rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+              id="Address"
+              type="text"
+              placeholder="Address"
             />
           </div>
           <div className="flex items-center justify-between">

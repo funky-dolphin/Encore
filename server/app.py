@@ -18,7 +18,8 @@ class Signup(Resource):
                 username = data['username'],
                 password_hash = data['_password_hash'],
                 email = data['email'],
-                zipcode = data['zipcode']   
+                city = data['city'],
+                address = data['address']
             )
         try:
             db.session.add(new_user)

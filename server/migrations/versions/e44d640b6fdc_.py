@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 3292108f9b75
+Revision ID: e44d640b6fdc
 Revises: 
-Create Date: 2023-04-26 16:51:24.824974
+Create Date: 2023-05-03 12:23:33.260920
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '3292108f9b75'
+revision = 'e44d640b6fdc'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -28,16 +28,18 @@ def upgrade():
     sa.Column('username', sa.String(), nullable=False),
     sa.Column('_password_hash', sa.String(), nullable=False),
     sa.Column('email', sa.String(), nullable=False),
-    sa.Column('zipcode', sa.String(), nullable=False),
+    sa.Column('city', sa.String(), nullable=False),
+    sa.Column('address', sa.String(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('artists',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('user', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('name', sa.String(), nullable=False),
     sa.Column('email', sa.String(), nullable=False),
-    sa.Column('zipcode', sa.String(), nullable=False),
-    sa.ForeignKeyConstraint(['user'], ['users.id'], name=op.f('fk_artists_user_users')),
+    sa.Column('city', sa.String(), nullable=False),
+    sa.Column('address', sa.String(), nullable=False),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], name=op.f('fk_artists_user_id_users')),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###

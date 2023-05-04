@@ -28,11 +28,13 @@ function App() {
 
 
 
+
+
   return (
     <BrowserRouter>
     <Navbar setUser={setUser} user={user} />
     <Routes>
-      <Route path="/" element={<CitySearch userZipcode={user?.zipcode} username={user?.username} />} />
+      <Route path="/" element={<CitySearch userCity={user?.city} username={user?.username} />} />
       <Route path="/login" element={<Login setUser={setUser} user={user} />} />
       <Route path="/signup" element={<Signup setUser={setUser} />} />
       <Route path = "/events" element={<Events setUser={setUser} user={user} />}/>

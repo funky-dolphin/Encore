@@ -4,22 +4,28 @@ import {Link} from 'react-router-dom'
 import APIKEY from '../config'
 
 
-const Concerts = () => {
+const Concerts = ({user}) => {
   const [events, setEvents] = useState([]);
   const [keyword, setKeyword] = useState('');
+  const [currentPage, setCurrentPage] = useState(0)
 
-  const fetchEvents = () => {
+  console.log(user)
+
+  const fetchEvents = (isUserSignedIn, page=0) => {
     const today = new Date();
     const formattedDate = today.toISOString().slice(0, 10)
+    const apiURL = isUserSignedIn
+    ? `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${APIKEY}&classificationName=music&segmentName=Music&startDateTime=${formattedDate}T00:00:00Z&sort=date,asc&locale=*&size=50&page=${page}&keyword=${keyword}&city=${user.city}`
+    : `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${APIKEY}&classificationName=music&segmentName=Music&startDateTime=${formattedDate}T00:00:00Z&sort=date,asc&locale=*&size=50&page=${page}&keyword=${keyword}`;
   
-    fetch(`https://app.ticketmaster.com/discovery/v2/events.json?apikey=${APIKEY}&classificationName=music&segmentName=Music&startDateTime=${formattedDate}T00:00:00Z&sort=date,asc&locale=*&size=50&keyword=${keyword}`)
+    fetch(apiURL)
     .then(response => response.json())
     .then(data => {
         console.log(data)
         const events = data._embedded.events;
         const basicEventData = events.map(event => {
-          const venue = event._embedded.venues[0];
-          const imageUrl = event.images.find(image => image.ratio === '16_9').url;
+            const venue = events[0]._embedded.venues[0];
+            const imageUrl = event.images.find(image => image.ratio === '16_9' && image.width > '1000').url;
           let artistName = 'Unknown';
           if (event.lineup && event.lineup.length > 0) {
             artistName = event.lineup.join(', ');
@@ -28,6 +34,7 @@ const Concerts = () => {
           } else if (event._embedded.attractions && !Array.isArray(event._embedded.attractions) && event._embedded.attractions.name) {
             artistName = event._embedded.attractions.name;
           }
+          const genre = event.classifications && event.classifications[0].genre ? event.classifications[0].genre.name : 'Unknown'
           return {
             id: event.id,
             name: event.name,
@@ -38,7 +45,7 @@ const Concerts = () => {
             venueAddress: `${venue.address?.line1 || 'No address given'}`,
             priceRange: event.priceRanges ? `${event.priceRanges[0].min} - ${event.priceRanges[0].max} ${event.priceRanges[0].currency}` : 'N/A',
             imageUrl: imageUrl,
-            genre:events[0].classifications[0].genre.name
+            genre: genre
           };
         });
   
@@ -46,6 +53,14 @@ const Concerts = () => {
       })
       .catch(error => console.log(error));
   };
+
+  const handleNextPage = () => {
+    setCurrentPage(currentPage + 1);
+  };
+
+  const handlePreviousPage = ()=>{
+    setCurrentPage(currentPage - 1);
+  }
 
   const handleKeywordChange = (e) => {
     setKeyword(e.target.value);
@@ -55,10 +70,10 @@ const Concerts = () => {
     e.preventDefault();
     fetchEvents();
   };
-
+const isUserSignedIn = !!user
   useEffect(() => {
-    fetchEvents(); // Fetch events on initial render
-  }, []);
+    fetchEvents(isUserSignedIn, currentPage); // Fetch events on initial render
+  }, [currentPage]);
 
   return (
     <div>
@@ -82,6 +97,23 @@ const Concerts = () => {
                 
             ))}
       </div>
+
+      <div className="w-full flex justify-between items-center mt-4">
+  <button
+    className="bg-red-600 hover:bg-red-800 text-white font-bold py-3 px-5 rounded"
+    onClick={handlePreviousPage}
+    disabled={currentPage === 0}
+  >
+    Previous
+  </button>
+
+  <button
+    className="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-5 rounded"
+    onClick={handleNextPage}
+  >
+    Next
+  </button>
+</div>
     </div>
   );
 };

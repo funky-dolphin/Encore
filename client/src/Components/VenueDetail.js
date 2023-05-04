@@ -50,7 +50,7 @@ function VenueDetail() {
             if (data._embedded && data._embedded.events) {
               const eventsList = data._embedded.events.map((event) => {
                 const eventImage = event.images
-                  ? event.images.find((image) => image.ratio === '16_9')?.url
+                  ? event.images.find(image => image.ratio === '16_9' && image.width > '1000').url
                   : null;
                 return {
                   id: event.id,
@@ -102,7 +102,7 @@ function VenueDetail() {
             </div>
           )}
           <div
-            className="cursor-pointer mt-4 text-xl font-bold"
+            className="cursor-pointer mt-4 text-xl font-bold bg-gray-100 shadow-md p-5 rounded-lg"
             onClick={toggleUpcomingEvents}
           >
             Upcoming Events

@@ -18,7 +18,7 @@ function ConcertDetails() {
       .then((data) => {
         console.log(data)
         const eventImage = data.images
-          ? data.images.find((image) => image.ratio === '16_9')?.url
+          ? data.images.find(image => image.ratio === '16_9' && image.width > '1000').url
           : null;
           const eventDetails = {
           id: data.id,
@@ -40,36 +40,37 @@ function ConcertDetails() {
 
   
 
-  return (
-    <div className="bg-white text-black w-full flex flex-col items-center justify-center py-8 mt-0)">
-    {event && (
-      <div className="max-w-2xl w-full space-y-6">
-        {event.imageUrl && (
-          <div className="w-full h-80 overflow-hidden rounded-lg relative">
-            <img className="w-full h-full object-cover absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" 
-              src={event.imageUrl} 
-              alt={event.name} 
-              style={{objectFit: 'contain'}}/>
-          </div>
-        )}
-        <div className="bg-gray-100 p-6 rounded-lg shadow-md">
-          <h1 className="text-3xl text-center font-bold mb-3">{event.name}</h1>
-          <p className="text-lg font-semibold mb-2">Date: {event.date}</p>
-          <p className="text-lg font-semibold mb-2">Time: {event.time}</p>
-          <p className="text-lg font-semibold mb-2">Venue: {event.venue}</p>
-          <p className="text-lg font-semibold mb-2">Address: {event.venueAddress}</p>
-          <p className="text-lg font-semibold mb-2">Genre: {event.genre}</p>
-          <p className="text-lg font-semibold mb-2">Price: {event.priceRange}</p>
+
+    return (
+        <div className="bg-white text-black w-full flex flex-col items-center justify-center py-12 mt-0">
+          {event && (
+            <div className="max-w-2xl w-full space-y-8">
+              {event.imageUrl && (
+                <div className="w-full h-96 overflow-hidden rounded-lg relative">
+                  <img className="w-full h-full object-cover absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" 
+                    src={event.imageUrl} 
+                    alt={event.name} 
+                    style={{objectFit: 'contain'}}/>
+                </div>
+              )}
+              <div className="bg-gray-100 p-8 rounded-lg shadow-md">
+                <h1 className="text-4xl text-center font-bold mb-4">{event.name}</h1>
+                <p className="text-xl font-semibold mb-3">Date: {event.date}</p>
+                <p className="text-xl font-semibold mb-3">Time: {event.time}</p>
+                <p className="text-xl font-semibold mb-3">Venue: {event.venue}</p>
+                <p className="text-xl font-semibold mb-3">Address: {event.venueAddress}</p>
+                <p className="text-xl font-semibold mb-3">Genre: {event.genre}</p>
+                <p className="text-xl font-semibold mb-3">Price: {event.priceRange}</p>
+              </div>
+              <div>
+                <a href={event.ticketURL} className="bg-red-600 hover:bg-red-800 text-white font-bold py-4 px-6">
+                  Buy Tickets
+                </a>
+              </div>
+            </div>
+          )}
         </div>
-        <div >
-        <a href = {event.ticketURL} className="bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded">
-            Buy Tickets
-        </a>
-        </div>
-      </div>
-    )}
-  </div>
-);
+      );
 }
 
 export default ConcertDetails;

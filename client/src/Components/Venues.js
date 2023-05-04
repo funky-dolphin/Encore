@@ -9,6 +9,9 @@ function Venues(){
     const [keyword, setKeyword] = useState('');
 
 
+    
+
+
     const fetchVenues = () =>{
     fetch(`https://app.ticketmaster.com/discovery/v2/venues.json?apikey=${APIKEY}&keyword=${keyword}`)
     .then(response => response.json())

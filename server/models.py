@@ -11,7 +11,8 @@ class User(db.Model, SerializerMixin):
     username = db.Column(db.String, nullable=False)
     _password_hash = db.Column(db.String, nullable=False)
     email = db.Column(db.String, nullable=False)
-    zipcode = db.Column(db.String, nullable=False)
+    city = db.Column(db.String, nullable=False)
+    address = db.Column(db.String, nullable=False)
 
 
     @hybrid_property
@@ -33,10 +34,11 @@ class Artist(db.Model, SerializerMixin):
     __tablename__ = 'artists'
 
     id = db.Column(db.Integer, primary_key=True)
-    user = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     name = db.Column(db.String, nullable=False)
     email = db.Column(db.String, nullable=False)
-    zipcode = db.Column(db.String, nullable=False)
+    city = db.Column(db.String, nullable=False)
+    address = db.Column(db.String, nullable=False)
 
 class Genre(db.Model, SerializerMixin):
     __tablename__ = 'genres'
