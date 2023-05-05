@@ -6,19 +6,30 @@ import APIKEY from '../config'
 
 const Concerts = ({user, setUser}) => {
   const [events, setEvents] = useState([]);
-  const [keyword, setKeyword] = useState('');
+  const [keyword, setKeyword] = useState("");
   const [currentPage, setCurrentPage] = useState(0)
 
   useEffect(() => {
-    fetch("/check_session", {
-    }).then((response) => {
+    fetch("/check_session", {}).then((response) => {
       if (response.ok) {
-        response.json().then((user) => setUser(user));
+        response.json().then((userData) => {
+          setUser(userData);
+        });
+      } else {
+        setUser(null); // Set user to null if not logged in
       }
     });
   }, []);
 
+console.log(user)
+
+  const isUserSignedIn = !!user
+  useEffect(() => {
+    fetchEvents(isUserSignedIn, currentPage); // Fetch events on initial render
+  }, [currentPage, isUserSignedIn]);
+
   console.log(user)
+  console.log(events)
 
   const fetchEvents = (isUserSignedIn, page=0) => {
     const today = new Date();
@@ -32,7 +43,7 @@ const Concerts = ({user, setUser}) => {
     .then(data => {
         console.log(data)
         const events = data._embedded.events;
-        const basicEventData = events.map(event => {
+        const basicEventData = events.map(event => {    
             const venue = event._embedded.venues[0];
             const imageUrl = event.images.find(image => image.ratio === '16_9' && image.width > '1000').url;
           let artistName = 'Unknown';
@@ -79,10 +90,7 @@ const Concerts = ({user, setUser}) => {
     e.preventDefault();
     fetchEvents();
   };
-const isUserSignedIn = !!user
-  useEffect((isUserSignedIn) => {
-    fetchEvents(isUserSignedIn, currentPage); // Fetch events on initial render
-  }, [currentPage, isUserSignedIn]);
+
 
   return (
     <div>

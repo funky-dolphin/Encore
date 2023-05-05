@@ -2,31 +2,40 @@ import React, { useState, useEffect } from 'react';
 import EventCard from './EventCard';
 import {Link} from 'react-router-dom'
 import APIKEY from '../config'
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 
-const CitySearch = ({userCity, username, setUser}) => {
-  const [city, setCity] = useState('New York');
+const CitySearch = ({setUser, user}) => {
   const [events, setEvents] = useState([])
-  const [page, setPage] = useState(0)
+  const [currentPage, setCurrentPage] = useState(0)
+
 
   useEffect(() => {
-    console.log(userCity)
-    fetchEvents(userCity || city)
-  }, [userCity]);
+    fetch("/check_session", {}).then((response) => {
+      if (response.ok) {
+        response.json().then((userData) => {
+          setUser(userData);
+        });
+      } else {
+        setUser(null); // Set user to null if not logged in
+      }
+    });
+  }, []);
 
-  useEffect(()=> {
-    fetchEvents(city, page)
-  },[page]);
+  console.log(user)
 
-  const fetchEvents = (city, page = 0) => {
+  const isUserSignedIn = !!user
+  useEffect(() => {
+      fetchEvents(isUserSignedIn, currentPage);
+  }, [currentPage, isUserSignedIn]);
+
+  const fetchEvents = (isUserSignedIn, page = 0) => {
     const today = new Date();
     const formattedDate = today.toISOString().slice(0, 10);
-    const size = 3;
-    const start = page * size;
+    const apiURL = isUserSignedIn
+      ? `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${APIKEY}&classificationName=music&segmentName=Music&startDateTime=${formattedDate}T00:00:00Z&sort=date,asc&locale=*&size=50&page=${page}&city=${user.city}`
+      : `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${APIKEY}&classificationName=music&segmentName=Music&startDateTime=${formattedDate}T00:00:00Z&sort=date,asc&locale=*&size=50&page=${page}`;
 
-    
-    fetch(`https://app.ticketmaster.com/discovery/v2/events.json?apikey=${APIKEY}&city=${city}&classificationName=music&segmentName=Music&startDateTime=${formattedDate}T00:00:00Z&sort=date,asc&locale=*&page=${start}&size=${size}`)
+    fetch(apiURL)
       .then(response => response.json())
       .then(data => {
         console.log(data)
@@ -64,23 +73,21 @@ const CitySearch = ({userCity, username, setUser}) => {
           .slice(0, 3);
         console.log(basicEventData);
         setEvents(basicEventData)
-        console.log(events)
       })
       .catch(error => console.log(error));
   };
 
   const handleSearch = (e) => {
     e.preventDefault();
-    setPage(0);
-    fetchEvents(city, 0);
+    fetchEvents();
   };
 
   const handlePrevPage = () => {
-    setPage(prevPage => prevPage - 1);
+    setCurrentPage(currentPage - 1);
   };
 
   const handleNextPage = () => {
-    setPage(prevPage => prevPage + 1);
+    setCurrentPage(currentPage + 1);
   };
 
 
@@ -102,7 +109,7 @@ const CitySearch = ({userCity, username, setUser}) => {
             className="appearance-none bg-transparent border-none w-full text-black mr-3 py-1 px-2 leading-tight focus:outline-none"
             type="text"
             placeholder = "Enter City"
-            onChange={(e) => setCity(e.target.value)}
+            // onChange={(e) => }
           />
           <button
             className="flex-shrink-0 bg-red-500 hover:bg-red-600 border-red-500 hover:border-red-600 text-sm border-4 text-black py-1 px-2 rounded"
@@ -112,13 +119,13 @@ const CitySearch = ({userCity, username, setUser}) => {
           </button>
         </div>
         </form>
-        {userCity && username && (
-            <h1 className="text-2xl font-bold">Hey {username}, here are some shows in {userCity}</h1>)}
+        {/* {userCity && username && (
+            <h1 className="text-2xl font-bold">Hey {username}, here are some shows in {userCity}</h1>)} */}
         <div className="flex items-center w-full max-w-5">
       <button
         className="bg-red-500 hover:bg-red-600 text-black font-bold py-2 px-4 rounded mr-4"
         onClick={handlePrevPage}
-        disabled={page === 0}
+        disabled={currentPage === 0}
       >
         Previous
       </button>

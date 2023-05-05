@@ -3,14 +3,33 @@ import VenueCard from './VenueCard';
 import {Link} from 'react-router-dom'
 import APIKEY from '../config';
 
-function Venues({user}){
-    const [venues, setVenues] = useState([])
-    
-    const [keyword, setKeyword] = useState('');
+function Venues({user, setUser}){
+  const [venues, setVenues] = useState([])
+  const [keyword, setKeyword] = useState('');
+
+
+  useEffect(() => {
+    fetch("/check_session", {}).then((response) => {
+      if (response.ok) {
+        response.json().then((userData) => {
+          setUser(userData);
+          });
+      } else {
+        setUser(null); // Set user to null if not logged in
+        }
+     });
+    }, []);
 
     console.log(user)
 
-    const fetchVenues = (isUserSignedIn) => {
+
+    const isUserSignedIn = !!user
+
+    useEffect(()=> {
+      fetchVenues(isUserSignedIn)
+    },[isUserSignedIn])
+
+  const fetchVenues = (isUserSignedIn) => {
       const apiURL = isUserSignedIn
         ? `https://app.ticketmaster.com/discovery/v2/venues.json?apikey=${APIKEY}&keyword=${user.city}`
         : `https://app.ticketmaster.com/discovery/v2/venues.json?apikey=${APIKEY}&keyword=${keyword}`;
@@ -40,11 +59,6 @@ function Venues({user}){
           console.error('Error fetching venues:', error);
         });
     };
-
-const isUserSignedIn = !!user
-// useEffect(()=>{
-//     fetchVenues();
-// }, [])
 
 useEffect(() => {
     fetchVenues(isUserSignedIn);

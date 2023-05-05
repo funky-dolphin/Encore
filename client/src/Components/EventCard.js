@@ -1,6 +1,7 @@
 import React from 'react';
 
 const EventCard = ({ event }) => {
+    // console.log(event)
   return (
     <div className="bg-white rounded shadow-md p-4">
    <div className="w-full aspect-w-16 aspect-h-9 rounded mb-4 overflow-hidden">
