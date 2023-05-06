@@ -16,7 +16,6 @@ function Login({setUser}) {
   }
 
   function handleSubmit(e) {
-    e.preventDefault();
     const loginUser = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -27,9 +26,6 @@ function Login({setUser}) {
         .then(data => setUser(data));
         navigate('/')
     }
-
-    
-  
 
   return (
     <div className="flex justify-center items-center h-screen">

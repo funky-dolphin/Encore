@@ -18,8 +18,13 @@ function ConcertDetails() {
       .then((data) => {
         console.log(data)
         const eventImage = data.images
-          ? data.images.find(image => image.ratio === '16_9' && image.width > '1000').url
-          : null;
+            ? data.images.find(image => image.ratio === '16_9' && image.width > '1000').url
+            : null;
+        const venue = data._embedded.venues[0];
+        const city = venue.city ? venue.city.name : 'N/A';
+        const state = venue.state ? venue.state.stateCode : 'N/A';
+        const zip = venue.postalCode ? venue.postalCode : 'N/A';
+        const venueAddress = `${city}, ${state}  ${zip}`;
           const eventDetails = {
           id: data.id,
           name: data.name,
@@ -27,7 +32,8 @@ function ConcertDetails() {
           time: data.dates?.start?.localTime || 'N/A',
           imageUrl: eventImage || 'No image available',
           venue: data._embedded.venues[0].name,
-          venueAddress: `${data._embedded.venues[0].address?.line1 || 'No address given'}`,
+          location: venueAddress,
+          address: `${data._embedded.venues[0].address?.line1 || 'No address given'}`,
           genre: data.classifications[0].genre.name,
           priceRange: data.priceRanges ? `${data.priceRanges[0].min} - ${data.priceRanges[0].max} ${data.priceRanges[0].currency}` : 'N/A',
           ticketURL: data.url
@@ -56,9 +62,10 @@ function ConcertDetails() {
               <div className="bg-gray-100 p-8 rounded-lg shadow-md">
                 <h1 className="text-4xl text-center font-bold mb-4">{event.name}</h1>
                 <p className="text-xl font-semibold mb-3">Date: {event.date}</p>
-                <p className="text-xl font-semibold mb-3">Time: {event.time}</p>
+                <p className="text-xl font-semibold mb-3">Time: {new Date(event.date + "T" + event.time).toLocaleTimeString([],{hour:'numeric', minute:'2-digit'})}</p>
                 <p className="text-xl font-semibold mb-3">Venue: {event.venue}</p>
-                <p className="text-xl font-semibold mb-3">Address: {event.venueAddress}</p>
+                <p className="text-xl font-semibold mb-3">{event.location}</p>
+                <p className="text-xl font-semibold mb-3">Address: {event.address}</p>
                 <p className="text-xl font-semibold mb-3">Genre: {event.genre}</p>
                 <p className="text-xl font-semibold mb-3">Price: {event.priceRange}</p>
               </div>

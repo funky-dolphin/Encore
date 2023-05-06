@@ -9,24 +9,15 @@ const Concerts = ({user, setUser}) => {
   const [keyword, setKeyword] = useState("");
   const [currentPage, setCurrentPage] = useState(0)
 
-  useEffect(() => {
-    fetch("/check_session", {}).then((response) => {
-      if (response.ok) {
-        response.json().then((userData) => {
-          setUser(userData);
-        });
-      } else {
-        setUser(null); // Set user to null if not logged in
-      }
-    });
-  }, []);
-
 console.log(user)
 
-  const isUserSignedIn = !!user
+const isUserSignedIn = !!user
   useEffect(() => {
-    fetchEvents(isUserSignedIn, currentPage); // Fetch events on initial render
-  }, [currentPage, isUserSignedIn]);
+    if (user) {
+      fetchEvents(isUserSignedIn, currentPage);
+    }
+    fetchEvents(isUserSignedIn)
+  }, [currentPage, isUserSignedIn, user]);
 
   console.log(user)
   console.log(events)
@@ -46,6 +37,10 @@ console.log(user)
         const basicEventData = events.map(event => {    
             const venue = event._embedded.venues[0];
             const imageUrl = event.images.find(image => image.ratio === '16_9' && image.width > '1000').url;
+            const city = venue.city ? venue.city.name : 'N/A';
+            const state = venue.state ? venue.state.stateCode : 'N/A';
+            const zip = venue.postalCode ? venue.postalCode : 'N/A';
+            const venueAddress = `${city}, ${state}  ${zip}`;
           let artistName = 'Unknown';
           if (event.lineup && event.lineup.length > 0) {
             artistName = event.lineup.join(', ');
@@ -59,10 +54,11 @@ console.log(user)
             id: event.id,
             name: event.name,
             date: event.dates.start.localDate,
-            time: event.dates.start.localTime,
+            // time: event.dates.start.localTime,
             artistName: artistName,
             venueName: venue.name,
-            venueAddress: `${venue.address?.line1 || 'No address given'}`,
+            address: venueAddress,
+            street: `${venue.address?.line1 || 'No address given'}`,
             priceRange: event.priceRanges ? `${event.priceRanges[0].min} - ${event.priceRanges[0].max} ${event.priceRanges[0].currency}` : 'N/A',
             imageUrl: imageUrl,
             genre: genre

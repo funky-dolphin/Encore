@@ -4,36 +4,48 @@ import {Link} from 'react-router-dom'
 import APIKEY from '../config'
 
 
+  // const isUserSignedIn = !!user
+  // useEffect(() => {
+  //     fetchEvents(isUserSignedIn, currentPage);
+  // }, [currentPage, isUserSignedIn, user]);
+
+  // const fetchEvents = (isUserSignedIn, page = 0) => {
+  //   const today = new Date();
+  //   const formattedDate = today.toISOString().slice(0, 10);
+  //   const apiURL = isUserSignedIn && user
+  //     ? `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${APIKEY}&classificationName=music&segmentName=Music&startDateTime=${formattedDate}T00:00:00Z&sort=date,asc&locale=*&size=50&page=${page}&city=${user.city}`
+  //     : `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${APIKEY}&classificationName=music&segmentName=Music&startDateTime=${formattedDate}T00:00:00Z&sort=date,asc&locale=*&size=50&page=${page}`;
+
+
 const CitySearch = ({setUser, user}) => {
   const [events, setEvents] = useState([])
   const [currentPage, setCurrentPage] = useState(0)
 
 
-  useEffect(() => {
-    fetch("/check_session", {}).then((response) => {
-      if (response.ok) {
-        response.json().then((userData) => {
-          setUser(userData);
-        });
-      } else {
-        setUser(null); // Set user to null if not logged in
-      }
-    });
-  }, []);
-
-  console.log(user)
-
   const isUserSignedIn = !!user
+
   useEffect(() => {
+    if (isUserSignedIn) {
+      setCurrentPage(0)
+      // fetchEvents()
+    }
+  }, []);
+  
+  useEffect(() => {
+    if (isUserSignedIn) {
       fetchEvents(isUserSignedIn, currentPage);
+    } else {
+      fetchEvents(isUserSignedIn);
+    }
   }, [currentPage, isUserSignedIn]);
 
-  const fetchEvents = (isUserSignedIn, page = 0) => {
+  const fetchEvents = (isUserSignedIn, page=0) => {
     const today = new Date();
     const formattedDate = today.toISOString().slice(0, 10);
     const apiURL = isUserSignedIn
       ? `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${APIKEY}&classificationName=music&segmentName=Music&startDateTime=${formattedDate}T00:00:00Z&sort=date,asc&locale=*&size=50&page=${page}&city=${user.city}`
       : `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${APIKEY}&classificationName=music&segmentName=Music&startDateTime=${formattedDate}T00:00:00Z&sort=date,asc&locale=*&size=50&page=${page}`;
+
 
     fetch(apiURL)
       .then(response => response.json())
@@ -52,6 +64,10 @@ const CitySearch = ({setUser, user}) => {
             } else if (event._embedded.attractions && !Array.isArray(event._embedded.attractions) && event._embedded.attractions.name) {
               artistName = event._embedded.attractions.name;
             }
+            const city = venue.city ? venue.city.name : 'N/A';
+            const state = venue.state ? venue.state.stateCode : 'N/A';
+            const zip = venue.postalCode ? venue.postalCode : 'N/A';
+            const venueAddress = `${city}, ${state}  ${zip}`;
             return {
                 id: event.id,
                 name: event.name,
@@ -59,10 +75,11 @@ const CitySearch = ({setUser, user}) => {
                 time: event.dates.start.localTime,
                 artistName: artistName,
                 venueName: venue.name,
-                venueAddress: `${venue.address.line1}, ${venue.city.name}, ${venue.state.stateCode} ${venue.postalCode}`,
+                address: venueAddress,
+                street: `${venue.address?.line1}`,
                 priceRange: event.priceRanges ? `${event.priceRanges[0].min} - ${event.priceRanges[0].max} ${event.priceRanges[0].currency}` : 'N/A',
                 imageUrl: imageUrl,
-                genre: event.classifications[0].genre.name,
+                genre: event.classifications[0].genre?.name,
             };
           })
           .sort((a, b) => {
@@ -79,7 +96,7 @@ const CitySearch = ({setUser, user}) => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    fetchEvents();
+    fetchEvents()
   };
 
   const handlePrevPage = () => {
@@ -125,7 +142,6 @@ const CitySearch = ({setUser, user}) => {
       <button
         className="bg-red-500 hover:bg-red-600 text-black font-bold py-2 px-4 rounded mr-4"
         onClick={handlePrevPage}
-        disabled={currentPage === 0}
       >
         Previous
       </button>

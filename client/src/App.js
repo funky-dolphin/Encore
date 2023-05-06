@@ -14,19 +14,20 @@ function App() {
   const [user, setUser] = useState(null)
   
   // const [zipCode, setZipCode] = useState("");
-  console.log(user)
- 
 
   useEffect(() => {
-    fetch("/check_session", {
-    }).then((response) => {
+    fetch("/check_session", {}).then((response) => {
       if (response.ok) {
-        response.json().then((user) => setUser(user));
+        response.json().then((userData) => {
+          setUser(userData);
+        });
+      } else {
+        setUser(null); // Set user to null if not logged in
       }
     });
   }, []);
 
-
+  console.log(user)
 
 
 

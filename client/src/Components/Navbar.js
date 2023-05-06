@@ -53,7 +53,7 @@ function Navbar({setUser, user}) {
       <div className="flex justify-between">
           <button
             type="button"
-            className="px-6 py-3 bg-red-700 text-white hover:bg-red-800 transition-colors duration-300 mr-4"
+            className="px-5 py-2 bg-red-700 text-white hover:bg-red-800 transition-colors duration-300 mr-4"
             onClick={handleSignupClick}
           >
             Sign Up
