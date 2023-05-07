@@ -54,7 +54,8 @@ const CitySearch = ({setUser, user}) => {
         const events= data._embedded.events;
         const basicEventData = events
           .map(event => {
-            const venue = event._embedded.venues[0];
+            const venue = event._embedded.venues[0]
+            console.log(venue)
             const imageUrl = event.images.find(image => image.ratio === '16_9' && image.width > '1000').url;
             let artistName = 'Unknown';
             if (event.lineup && event.lineup.length > 0) {

@@ -14,6 +14,9 @@ class User(db.Model, SerializerMixin):
     city = db.Column(db.String, nullable=False)
     address = db.Column(db.String, nullable=False)
 
+    artist = db.relationship("Artist", back_populates = "user")
+    serialize_rules = ('-artist.user', )
+
 
     @hybrid_property
     def password_hash(self):
@@ -35,10 +38,33 @@ class Artist(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    name = db.Column(db.String, nullable=False)
-    email = db.Column(db.String, nullable=False)
+    band_name = db.Column(db.String)
+
+    user = db.relationship("User", back_populates='artist')
+    events = db.relationship("Event", back_populates='artist')
+
+    serialize_rules = ('-events.artist', '-user.artist')
+  
+
+class Event(db.Model, SerializerMixin):
+    __tablename__ = 'events'
+
+    id = db.Column(db.Integer, primary_key=True)
+    band = db.Column(db.String, db.ForeignKey('artists.id'))
+    venue = db.Column(db.String, nullable=False)
+    time = db.Column(db.String, nullable=False)
+    date = db.Column(db.String, nullable=False)
+    image = db.Column(db.String)
     city = db.Column(db.String, nullable=False)
     address = db.Column(db.String, nullable=False)
+    genre = db.Column(db.String, nullable=False)
+    price = db.Column(db.String)
+    link = db.Column(db.String)
+
+    artist = db.relationship("Artist", back_populates = "events")
+
+    serialize_rules = ('-artist.events', )
+
 
 class Genre(db.Model, SerializerMixin):
     __tablename__ = 'genres'

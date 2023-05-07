@@ -46,6 +46,12 @@ function Navbar({setUser, user}) {
         >
           Concerts
         </Link>
+        <Link
+        to = "/amateur"
+        className='className="px-4 py-2 hover:text-gray-400 transition-colors duration-300'
+        >
+          Amateur Spotlight
+        </Link>
       </div>
       <div className="text-2xl font-bold flex-grow text-center">
         <Link to="/">ENCORE</Link>
