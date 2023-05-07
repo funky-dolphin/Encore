@@ -95,7 +95,7 @@ class Events(Resource):
         
         data = request.get_json()
         new_event = Event(
-            artist = artist.id , 
+            artist = artist, 
             venue = data['venue'], 
             time = data['time'], 
             date= data['date'], 
@@ -111,7 +111,7 @@ class Events(Resource):
         
         return make_response(new_event.to_dict(), 200)
     
-api.add_resource(Events, '/events')
+api.add_resource(Events, '/concerts')
 
 class Events_by_id(Resource):
     def get(self, id):

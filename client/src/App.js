@@ -9,6 +9,7 @@ import Venues from "./Components/Venues";
 import VenueDetail from "./Components/VenueDetail";
 import ConcertDetails from "./Components/ConcertDetails";
 import Amateur from "./Components/Amateur_spotlight";
+import AddEventCard from "./Components/AddEvent";
 
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
       <Route path='/venue/:id' element={<VenueDetail />} />
       <Route path = '/event/:id' element={<ConcertDetails/>}/>
       <Route path = '/amateur' element = {<Amateur/>}/>
+      <Route path = '/addevent' element={<AddEventCard user = {user}/>}/>
     </Routes>
   </BrowserRouter>
 );

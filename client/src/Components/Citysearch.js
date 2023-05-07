@@ -35,7 +35,7 @@ const CitySearch = ({setUser, user}) => {
     if (isUserSignedIn) {
       fetchEvents(isUserSignedIn, currentPage);
     } else {
-      fetchEvents(isUserSignedIn);
+      fetchEvents()
     }
   }, [currentPage, isUserSignedIn]);
 

@@ -50,7 +50,7 @@ class Event(db.Model, SerializerMixin):
     __tablename__ = 'events'
 
     id = db.Column(db.Integer, primary_key=True)
-    band = db.Column(db.String, db.ForeignKey('artists.id'))
+    artist_id = db.Column(db.Integer, db.ForeignKey('artists.id'))
     venue = db.Column(db.String, nullable=False)
     time = db.Column(db.String, nullable=False)
     date = db.Column(db.String, nullable=False)
