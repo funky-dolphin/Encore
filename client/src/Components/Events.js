@@ -8,31 +8,35 @@ const Concerts = ({user, setUser}) => {
   const [events, setEvents] = useState([]);
   const [keyword, setKeyword] = useState("");
   const [currentPage, setCurrentPage] = useState(0)
-
-console.log(user)
+  const [searchedCity, setSearchedCity] = useState('')
 
 const isUserSignedIn = !!user
-  useEffect(() => {
-    if (user) {
-      fetchEvents(isUserSignedIn, currentPage);
-    }
-    fetchEvents(isUserSignedIn)
-  }, [currentPage, isUserSignedIn, user]);
 
-  console.log(user)
-  console.log(events)
+const getCity = () => {
+  if (searchedCity) {
+    return searchedCity;
+  }
+  if (isUserSignedIn && user && user.city) {
+    return user.city;
+  }
+  return '';
+};
 
-  const fetchEvents = (isUserSignedIn, page=0) => {
+useEffect(() => {
+  fetchEvents(getCity(), currentPage);
+}, [currentPage, isUserSignedIn, searchedCity]);
+
+
+
+  const fetchEvents = (searchedCity, page=0) => {
     const today = new Date();
-    const formattedDate = today.toISOString().slice(0, 10)
-    const apiURL = isUserSignedIn
-    ? `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${APIKEY}&classificationName=music&segmentName=Music&startDateTime=${formattedDate}T00:00:00Z&sort=date,asc&locale=*&size=50&page=${page}&keyword=${keyword}&city=${user.city}`
-    : `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${APIKEY}&classificationName=music&segmentName=Music&startDateTime=${formattedDate}T00:00:00Z&sort=date,asc&locale=*&size=50&page=${page}&keyword=${keyword}`;
-  
+    const formattedDate = today.toISOString().slice(0, 10);
+    const apiURL = `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${APIKEY}&classificationName=music&segmentName=Music&startDateTime=${formattedDate}T00:00:00Z&sort=date,asc&locale=*&size=50&page=${page}&city=${searchedCity}&countryCode=US&keyword=${keyword}`
+
+
     fetch(apiURL)
     .then(response => response.json())
     .then(data => {
-        console.log(data)
         const events = data._embedded.events;
         const basicEventData = events.map(event => {    
             const venue = event._embedded.venues[0];
@@ -79,13 +83,30 @@ const isUserSignedIn = !!user
   }
 
   const handleKeywordChange = (e) => {
-    setKeyword(e.target.value);
+    const inputkeyWord = (e.target.value);
+    if (inputkeyWord){
+      setKeyword(inputkeyWord)
+    } else{
+      setKeyword('')
+    }
   };
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    fetchEvents();
+    const inputCity = e.target.elements[0].value;
+    if (inputCity) {
+      setSearchedCity(inputCity);
+    } else {
+      setSearchedCity("");
+    }
+    fetchEvents(getCity(), currentPage, keyword);
   };
+
+
+  // const handleSearchSubmit = (e) => {
+  //   e.preventDefault();
+  //   fetchEvents();
+  // };
 
 
   return (

@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 
 function UpcomingEventsList({ events }) {
   if (!events || events.length === 0) {
-    return <p>No upcoming events found.</p>;
+    return <p className='bg-c3'>No upcoming events found.</p>;
   }
 
   return (

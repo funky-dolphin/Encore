@@ -84,14 +84,14 @@ function VenueDetail() {
           {venue && (
              <div className="max-w-2xl w-full space-y-8">
              {venue.imageUrl && (
-               <div className="w-full h-96 overflow-hidden rounded-lg relative">
+               <div className="w-full h-96 overflow-hidden rounded-lg relative bg-c3">
                  <img className="w-full h-full object-cover absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" 
                    src={venue.imageUrl} 
                    alt={venue.name} 
                    style={{objectFit: 'contain'}}/>
                </div>
               )}
-              <div className="bg-gray-100 p-6 rounded-lg shadow-md">
+              <div className="bg-gray-100 p-6 rounded-lg shadow-md bg-c3">
                 <h1 className="text-3xl font-bold mb-3">{venue.name}</h1>
                 <p className="text-lg font-semibold mb-2">State: {venue.state}</p>
                 <p className="text-lg font-semibold mb-2">City: {venue.city}</p>
@@ -100,7 +100,7 @@ function VenueDetail() {
             </div>
           )}
           <div
-            className="cursor-pointer mt-4 text-xl font-bold bg-gray-100 shadow-md p-5 rounded-lg"
+            className="cursor-pointer mt-4 text-xl font-bold bg-gray-100 shadow-md p-5 rounded-lg bg-c3"
             onClick={toggleUpcomingEvents}
           >
             Upcoming Events
