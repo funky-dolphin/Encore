@@ -13,6 +13,7 @@ class User(db.Model, SerializerMixin):
     email = db.Column(db.String, nullable=False)
     city = db.Column(db.String, nullable=False)
     address = db.Column(db.String, nullable=False)
+    state = db.Column(db.String, nullable=False)
 
     artist = db.relationship("Artist", back_populates = "user")
     serialize_rules = ('-artist.user', )

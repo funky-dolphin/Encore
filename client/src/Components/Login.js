@@ -29,7 +29,7 @@ function Login({setUser}) {
 
   return (
     <div className="flex justify-center items-center h-screen">
-      <div className="w-full max-w-md bg-black text-white rounded-lg p-6">
+      <div className="bg-c2 w-full max-w-md bg-black text-white rounded-lg p-6">
         <h2 className="text-3xl mb-6 font-bold">Login Form</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -60,7 +60,7 @@ function Login({setUser}) {
           </div>
           <div className="flex items-center justify-between">
             <button
-              className="bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="bg-c3 hover:bg-c4 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
             >
               Sign In

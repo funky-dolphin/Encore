@@ -41,7 +41,7 @@ function AddEventCard({user}){
 
     return(
         <div className="flex justify-center items-center h-screen">
-        <div className="w-full max-w-md bg-black text-white rounded-lg p-6">
+        <div className="w-full max-w-md bg-c2 text-white rounded-lg p-6">
             <h3>{successMessage}</h3>
           <h2 className="text-3xl mb-6 font-bold">Add Concert</h2>
           <form onSubmit = {handleSubmit}> 

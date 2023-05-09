@@ -20,32 +20,26 @@ import APIKEY from '../config'
 const CitySearch = ({setUser, user}) => {
   const [events, setEvents] = useState([])
   const [currentPage, setCurrentPage] = useState(0)
+  const [city, setCity] = useState('')
 
 
   const isUserSignedIn = !!user
 
   useEffect(() => {
-    if (isUserSignedIn) {
-      setCurrentPage(0)
-      // fetchEvents()
-    }
-  }, []);
-  
-  useEffect(() => {
-    if (isUserSignedIn) {
-      fetchEvents(isUserSignedIn, currentPage);
-    } else {
-      fetchEvents()
-    }
-  }, [currentPage, isUserSignedIn]);
+    fetchEvents(city, currentPage);
+  }, [currentPage, isUserSignedIn, city]);
 
-  const fetchEvents = (isUserSignedIn, page=0) => {
+  useEffect(() => {
+    if (isUserSignedIn && user && user.city) {
+      setCurrentPage(0);
+      setCity(user.city);
+    }
+  }, [isUserSignedIn, user]);
+
+  const fetchEvents = (city, page=0) => {
     const today = new Date();
     const formattedDate = today.toISOString().slice(0, 10);
-    const apiURL = isUserSignedIn
-      ? `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${APIKEY}&classificationName=music&segmentName=Music&startDateTime=${formattedDate}T00:00:00Z&sort=date,asc&locale=*&size=50&page=${page}&city=${user.city}`
-      : `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${APIKEY}&classificationName=music&segmentName=Music&startDateTime=${formattedDate}T00:00:00Z&sort=date,asc&locale=*&size=50&page=${page}`;
-
+    const apiURL = `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${APIKEY}&classificationName=music&segmentName=Music&startDateTime=${formattedDate}T00:00:00Z&sort=date,asc&locale=*&size=50&page=${page}&city=${city}`
 
     fetch(apiURL)
       .then(response => response.json())
@@ -97,8 +91,16 @@ const CitySearch = ({setUser, user}) => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    fetchEvents()
+    const searchedCity = e.target.elements[0].value;
+    if (searchedCity === '') {
+      if (isUserSignedIn) {
+        setCity(user.city);
+      }
+    } else {
+      setCity(searchedCity);
+    }
   };
+  
 
   const handlePrevPage = () => {
     setCurrentPage(currentPage - 1);
@@ -110,58 +112,58 @@ const CitySearch = ({setUser, user}) => {
 
 
   return (
-    <div className="w-full min-h-screen flex flex-col items-center justify-center space-y-8 bg-white text-black">
-    <form onSubmit={handleSearch} className="w-full max-w-md">
-    <div
+    <div className="w-full min-h-screen flex flex-col items-center bg-white text-black">
+   <div
   className="w-full bg-center bg-contain bg-no-repeat"
   style={{
-    backgroundImage: `url(${process.env.PUBLIC_URL}/Rock-Concert.jpeg)`,
-    width: '100vw',
-    height: '60vh', // Set the height to 100% of the viewport height
-    marginLeft: 'calc(-50vw + 50%)',
+    backgroundImage: `url(${process.env.PUBLIC_URL}/Rock-Concert1.jpeg)`,
+    backgroundPosition: ' center 50% ',
+    backgroundSize: '100% auto',
+    height: '50vh',
+    paddingTop: '10%',
   }}
 />
- 
-        <div className="flex items-center border-b-2 border-red-500 py-2">
-          <input
-            className="appearance-none bg-transparent border-none w-full text-black mr-3 py-1 px-2 leading-tight focus:outline-none"
-            type="text"
-            placeholder = "Enter City"
-            // onChange={(e) => }
-          />
+      <div className="pt-16 w-full max-w-md">
+        <form onSubmit={handleSearch} className="w-full">
+          <div className="flex items-center border-b-2 border-red-500 py-2">
+            <input
+              className="appearance-none bg-transparent border-none w-full text-black mr-3 py-1 px-2 leading-tight focus:outline-none"
+              type="text"
+              placeholder="Enter City"
+              // onChange={(e) => }
+            />
+            <button
+              className="flex-shrink-0 bg-c3 hover:bg-c4 border-c3 hover:border-c4 text-md border-4 text-black py-1 px-2 rounded"
+              type="submit"
+            >
+              Search
+            </button>
+          </div>
+        </form>
+        <div className="flex items-center w-full max-w-5">
           <button
-            className="flex-shrink-0 bg-red-500 hover:bg-red-600 border-red-500 hover:border-red-600 text-sm border-4 text-black py-1 px-2 rounded"
-            type="submit"
+            className="bg-c3 hover:bg-c4 text-black font-bold py-2 px-4 rounded mr-4"
+            onClick={handlePrevPage}
           >
-            Search
+            Previous
+          </button>
+          <div className="flex-grow grid grid-cols-4 sm:grid-cols-0 md:grid-cols-3 gap-4">
+            {events.map((event, index) => (
+              <Link to={`/event/${event.id}`} key={index}>
+                <EventCard event={event} />
+              </Link>
+            ))}
+          </div>
+          <button
+            className="bg-c3 hover:bg-c4 text-black font-bold py-2 px-4 rounded ml-4"
+            onClick={handleNextPage}
+          >
+            Next
           </button>
         </div>
-        </form>
-        {/* {userCity && username && (
-            <h1 className="text-2xl font-bold">Hey {username}, here are some shows in {userCity}</h1>)} */}
-        <div className="flex items-center w-full max-w-5">
-      <button
-        className="bg-red-500 hover:bg-red-600 text-black font-bold py-2 px-4 rounded mr-4"
-        onClick={handlePrevPage}
-      >
-        Previous
-      </button>
-      <div className="flex-grow grid grid-cols-4 sm:grid-cols-0 md:grid-cols-3 gap-4">
-        {events.map((event, index) => (
-          <Link to={`/event/${event.id}`} key={index}>
-            <EventCard event={event} />
-          </Link>
-        ))}
       </div>
-      <button
-        className="bg-red-500 hover:bg-red-600 text-black font-bold py-2 px-4 rounded ml-4"
-        onClick={handleNextPage}
-      >
-        Next
-      </button>
     </div>
-  </div>
-);
+  );
 };
 
 export default CitySearch;

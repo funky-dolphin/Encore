@@ -10,6 +10,7 @@ import VenueDetail from "./Components/VenueDetail";
 import ConcertDetails from "./Components/ConcertDetails";
 import Amateur from "./Components/Amateur_spotlight";
 import AddEventCard from "./Components/AddEvent";
+import AmateurEventDetails from "./Components/AmateurEventDeatils";
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
 
   return (
     <BrowserRouter>
+    <div className="bg-c1">
     <Navbar setUser={setUser} user={user} />
     <Routes>
       <Route path="/" element={<CitySearch user = {user} setUser={setUser} />} />
@@ -46,7 +48,9 @@ function App() {
       <Route path = '/event/:id' element={<ConcertDetails/>}/>
       <Route path = '/amateur' element = {<Amateur/>}/>
       <Route path = '/addevent' element={<AddEventCard user = {user}/>}/>
+      <Route path = '/amateur_events/:id' element={<AmateurEventDetails/>}/>
     </Routes>
+    </div>
   </BrowserRouter>
 );
 }

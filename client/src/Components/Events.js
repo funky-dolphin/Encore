@@ -89,7 +89,7 @@ const isUserSignedIn = !!user
 
 
   return (
-    <div>
+    <div className = "flex flex-col h-screen">
       <form onSubmit={handleSearchSubmit} className="mb-4">
         <input
           type="text"

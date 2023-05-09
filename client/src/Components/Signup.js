@@ -10,6 +10,7 @@ function Signup({setUser}) {
   const [signupAddress, setSignupAddress] = useState("")
   const [isArtist, setIsArtist] = useState(false)
   const [signupBandName, setSignupBandName] = useState('')
+  const [signupState, setSignupState] = useState('')
   const navigate = useNavigate()
 
   function handleSignupSubmit(e){
@@ -20,6 +21,7 @@ function Signup({setUser}) {
       _password_hash: signupPassword, 
       city: signupCity,
       address: signupAddress,
+      state: signupState,
       is_artist : isArtist,
       band_name : signupBandName,
     }
@@ -37,15 +39,15 @@ function Signup({setUser}) {
 
   return (
     <div className="flex justify-center items-center h-screen">
-      <div className="w-full max-w-md bg-black text-white rounded-lg p-6">
+      <div className="bg-c2 w-full max-w-md bg-black text-white rounded-lg p-6">
         <h2 className="text-3xl mb-6 font-bold">Signup Form</h2>
         <form onSubmit = {handleSignupSubmit}> 
           <div className="mb-4">
-            <label className="block text-sm font-bold mb-2 text-gray-400" htmlFor="username">
+            <label className="block text-sm font-bold mb-2 text-black" htmlFor="username">
               Username
             </label>
             <input onChange = {(e) => setSignupUsername(e.target.value)}
-              className="appearance-none bg-gray-800 rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+              className="appearance-none rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
               id="username"
               type="text"
               placeholder="Username"
@@ -56,7 +58,7 @@ function Signup({setUser}) {
               Email
             </label>
             <input onChange = {(e) => setSignupEmail(e.target.value)}
-              className="appearance-none bg-gray-800 rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+              className="appearance-none rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
               id="email"
               type="email"
               placeholder="Email"
@@ -67,7 +69,7 @@ function Signup({setUser}) {
               Password
             </label>
             <input onChange = {(e)=> setSignupPassword(e.target.value)}
-              className="appearance-none bg-gray-800 rounded w-full py-2 px-3 text-white mb-1 leading-tight focus:outline-none focus:shadow-outline"
+              className="appearance-none rounded w-full py-2 px-3 text-white mb-1 leading-tight focus:outline-none focus:shadow-outline"
               id="password"
               type="password"
               placeholder="*************"
@@ -75,10 +77,21 @@ function Signup({setUser}) {
           </div>
           <div className="mb-4">
             <label className="block text-sm font-bold mb-2 text-gray-400" htmlFor="city">
+              State Code
+            </label>
+            <input onChange = {(e)=> setSignupState(e.target.value)}
+              className="appearance-none  rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+              id="state"
+              type="text"
+              placeholder="ie: NY, CA, MA"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-bold mb-2 text-gray-400" htmlFor="city">
               City
             </label>
             <input onChange = {(e)=> setSignupCity(e.target.value)}
-              className="appearance-none bg-gray-800 rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+              className="appearance-none rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
               id="city"
               type="text"
               placeholder="City"
@@ -89,7 +102,7 @@ function Signup({setUser}) {
               Address
             </label>
             <input onChange = {(e)=> setSignupAddress(e.target.value)}
-              className="appearance-none bg-gray-800 rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+              className="appearance-none rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
               id="Address"
               type="text"
               placeholder="Address"
@@ -112,7 +125,7 @@ function Signup({setUser}) {
             <div>
               <label htmlFor="band_name">Band Name:</label>
               <input
-                className="appearance-none bg-gray-800 rounded w-full py-2 px-5 text-white leading-tight focus:outline-none focus:shadow-outline"
+                className="appearance-none bg-white rounded w-full py-2 px-5 text-white leading-tight focus:outline-none focus:shadow-outline"
                 type="text"
                 id="band_name"
                 placeholder="Band"
@@ -122,7 +135,7 @@ function Signup({setUser}) {
           )}
           <div className="flex items-center justify-between">
           <button
-          className="bg-red-600 hover:bg-red-800 text-white font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="bg-c3 hover:bg-c4 text-white font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline"
           type="submit">
               Sign Up
             </button>

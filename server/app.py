@@ -20,7 +20,8 @@ class Signup(Resource):
                 password_hash = data['_password_hash'],
                 email = data['email'],
                 city = data['city'],
-                address = data['address']
+                address = data['address'],
+                state = data['state'],
             )
         try:
             db.session.add(new_user)
@@ -142,7 +143,7 @@ class Events_by_id(Resource):
         db.session.commit()
         return make_response({'message':'event deleted successfully'})
     
-api.add_resource(Events_by_id, '/events/<int:id>')
+api.add_resource(Events_by_id, '/amateur_events/<int:id>')
 
 
 
