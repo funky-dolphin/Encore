@@ -46,7 +46,7 @@ const isUserSignedin  = !!user
       <Route path = '/venues' element= {<Venues user = {user} setUser = {setUser}/>} />
       <Route path='/venue/:id' element={<VenueDetail />} />
       <Route path = '/event/:id' element={<ConcertDetails/>}/>
-      <Route path = '/amateur' element = {<Amateur/>}/>
+      <Route path = '/amateur' element = {<Amateur user={user}/>} />
       <Route path = '/addevent' element={<AddEventCard user = {user}/>}/>
       <Route path = '/amateur_events/:id' element={<AmateurEventDetails/>}/>
     </Routes>

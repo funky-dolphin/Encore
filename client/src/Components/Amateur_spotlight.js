@@ -36,7 +36,9 @@ function Amateur({user}){
         })
     
     }
-    console.log(amEvents)
+
+
+
 
 
     return(
@@ -50,10 +52,14 @@ function Amateur({user}){
             ))}
 
         </div>
-
-        <Link to="/addevent">
-            <button className="bg-c3 hover:bg-c4 text-white font-bold py-3 px-6 m-2 rounded-md">Add Event</button>
-        </Link>
+     
+    {user && user.artist.length > 0 && user.artist[0].id ? (
+  <Link to="/addevent">
+    <button className="bg-c3 hover:bg-c4 text-white font-bold py-3 px-6 m-2 rounded-md">Add Event</button>
+  </Link>
+) : (
+  ""
+)}
         
     </div>
     )

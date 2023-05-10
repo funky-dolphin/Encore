@@ -3,7 +3,7 @@ import React from 'react';
 const EventCard = ({ event }) => {
     // console.log(event)
   return (
-<div className="bg-c5 rounded shadow-bold p-4 hover:bg-c3 transition-all duration-300 transform hover:-translate-y-1 hover:scale-100 hover:rotate-1 hover:perspective(1000)">
+<div className="bg-c5 rounded shadow-bold p-4 hover:bg-c4 transition-all duration-300 transform hover:-translate-y-1 hover:scale-100 hover:rotate-1 hover:perspective(1000)">
    <div className="w-full aspect-w-16 aspect-h-9 rounded mb-4 overflow-hidden">
   <img src={event.imageUrl} alt={event.name} className="w-full h-full object-contain" style={{maxWidth: '100%'}} />
 </div>

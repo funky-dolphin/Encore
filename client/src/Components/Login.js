@@ -16,16 +16,28 @@ function Login({setUser}) {
   }
 
   function handleSubmit(e) {
+    e.preventDefault();
     const loginUser = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: username, password: password })
-      };
-      fetch('/login', loginUser)
-        .then(response => response.json())
-        .then(data => setUser(data));
-        navigate('/')
-    }
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: username, password: password })
+    };
+    fetch('/login', loginUser)
+    .then(response => {
+      if (!response.ok){
+        throw new Error(`Error: ${response.status} - ${response.statusText}`);
+      }
+      
+      return response.json();
+    })
+    .then(data => {
+      setUser(data);
+      navigate("/");
+    })
+    .catch(error => {
+      console.error("error during fetch:", error)
+    });
+}
 
   return (
     <div className="flex justify-center items-center h-screen">

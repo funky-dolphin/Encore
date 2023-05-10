@@ -109,13 +109,12 @@ import APIKEY from '../config'
       />
       <div className="pt-16 w-full px-4">
         <form onSubmit={handleSearch} className="w-full">
-          <div className="flex items-center border-b-2 border-red-500 py-2">
+          <div className="flex items-center border-b-2 py-2">
           <input
-          className="appearance-none bg-transparent border-none w-full text-black mr-3 py-1 px-2 leading-tight focus:outline-none"
-          type="text"
-          placeholder="Enter City"
-          // onChange={(e) => }
-        />
+        className="appearance-none bg-transparent border-none w-64 text-black mr-3 py-1 px-2 leading-tight focus:outline-none"
+        type="text"
+        placeholder="Enter City"
+      />
             <button
               className="flex-shrink-0 bg-c3 hover:bg-c4 border-c3 hover:border-c4 text-md border-4 text-black py-1 px-2 rounded"
               type="submit"

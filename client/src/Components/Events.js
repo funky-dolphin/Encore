@@ -134,7 +134,7 @@ useEffect(() => {
 
       <div className="w-full flex justify-between items-center mt-4">
   <button
-    className="bg-red-600 hover:bg-red-800 text-white font-bold py-3 px-5 rounded"
+    className="bg-c3 hover:bg-red-800 text-white font-bold py-3 px-5 rounded"
     onClick={handlePreviousPage}
     disabled={currentPage === 0}
   >
@@ -142,7 +142,7 @@ useEffect(() => {
   </button>
 
   <button
-    className="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-5 rounded"
+    className="bg-c3 hover:bg-red-600 text-white font-bold py-3 px-5 rounded"
     onClick={handleNextPage}
   >
     Next

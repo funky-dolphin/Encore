@@ -51,12 +51,14 @@ function Navbar({setUser, user}) {
         <button type="button" className="px-3 py-2 md:px-4 md:py-3 lg:px-3 lg:py-2 bg-c3 text-white hover:bg-c4 transition-colors duration-300 rounded-md mr-2 md:mr-4 mb-2 md:mb-0" onClick={handleSignupClick}>
           Sign Up
         </button>
-        <button type="button" className="px-3 py-2 md:px-4 md:py-3 lg:px-3 lg:py-2 bg-c3 text-white hover:bg-c4 transition-colors duration-300 rounded-md mr-2 md:mr-4 mb-2 md:mb-0" onClick={handleLoginClick}>
-          Login
-        </button>
-        <button type="button" className="px-3 py-2 md:px-4 md:py-3 lg:px-2 lg:py-2 bg-c3 text-white hover:bg-c4 transition-colors duration-300 rounded-md mb-2 md:mb-0" onClick={handleLogoutClick}>
-          Logout
-        </button>
+        {user ? (
+      <button type="button" className="px-3 py-2 md:px-4 md:py-3 lg:px-2 lg:py-2 bg-c3 text-white hover:bg-c4 transition-colors duration-300 rounded-md mb-2 md:mb-0" onClick={handleLogoutClick}>
+    Logout
+    </button>
+    ) : (
+   <button type="button" className="px-3 py-2 md:px-4 md:py-3 lg:px-3 lg:py-2 bg-c3 text-white hover:bg-c4 transition-colors duration-300 rounded-md mr-2 md:mr-4 mb-2 md:mb-0" onClick={handleLoginClick}>
+    Login
+    </button>)}
       </div>
     </nav>
   );
