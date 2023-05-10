@@ -11,33 +11,46 @@ function AddEventCard({user}){
     const [addLink, setLink] = useState('')
     const[successMessage, setSuccessmessage] = useState('')
     const [addDate, setDate] = useState('')
+    const [error, setError] = useState('')
 
 
-    function handleSubmit(e){
-        e.preventDefault()
+    async function handleSubmit(e){
+      e.preventDefault()
+    
+      try {
         const new_event = {
-            artist: user.artist[0],
-            venue: addVenueName, 
-            time: addTime, 
-            city: addCity, 
-            image: addImage, 
-            address: addAddress,
-            genre: addGenre,
-            price: addPrice,
-            link: addLink,
-            date: addDate,
+          artist: user.artist[0],
+          venue: addVenueName, 
+          time: addTime, 
+          city: addCity, 
+          image: addImage, 
+          address: addAddress,
+          genre: addGenre,
+          price: addPrice,
+          link: addLink,
+          date: addDate,
         }
         console.log(new_event)
-        fetch('/concerts',{
-            method: "POST",
-            headers:{
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(new_event),
+        const res = await fetch('/concerts',{
+          method: "POST",
+          headers:{
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(new_event),
         })
-        .then((res)=> res.json(res))
-        .then((data) =>setSuccessmessage('Concert Added'))
-}
+        if(res.ok){
+          alert("success")
+
+        }else{
+          const data = await res.json()
+          alert(`Error: ${data.error}`)
+        }
+       
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    
 
     return(
         <div className="flex justify-center items-center h-screen">
@@ -45,6 +58,11 @@ function AddEventCard({user}){
             <h3>{successMessage}</h3>
           <h2 className="text-3xl mb-6 font-bold">Add Concert</h2>
           <form onSubmit = {handleSubmit}> 
+          {error && (
+        <div className="bg-c4 text-c3 font-bold mb-4 p-4 rounded">
+          {error}
+        </div>
+      )}
             <div className="mb-4">
               <label className="block text-sm font-bold mb-2 text-gray-400" htmlFor="venue">
                 Venue

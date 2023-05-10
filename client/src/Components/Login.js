@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 function Login({setUser}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showError, setShowError] = useState(false)
   
   const navigate = useNavigate()
 
@@ -35,6 +36,7 @@ function Login({setUser}) {
       navigate("/");
     })
     .catch(error => {
+      setShowError(!showError)
       console.error("error during fetch:", error)
     });
 }
@@ -43,6 +45,11 @@ function Login({setUser}) {
     <div className="flex justify-center items-center h-screen">
       <div className="bg-c2 w-full max-w-md bg-black text-white rounded-lg p-6">
         <h2 className="text-3xl mb-6 font-bold">Login Form</h2>
+        {showError && (
+        <div className=" text-c3 px-4 py-2 mb-4 rounded">
+          Invalid Username or Password
+        </div>
+      )}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-sm font-bold mb-2 text-gray-400" htmlFor="username">

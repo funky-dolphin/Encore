@@ -13,7 +13,7 @@ function Signup({setUser}) {
   const [signupState, setSignupState] = useState('')
   const navigate = useNavigate()
 
-  function handleSignupSubmit(e){
+ async function handleSignupSubmit(e){
     e.preventDefault();
     const new_user = {
       username : signupUsername, 
@@ -25,17 +25,28 @@ function Signup({setUser}) {
       is_artist : isArtist,
       band_name : signupBandName,
     }
-    fetch("http://127.0.0.1:5555/signup", {
+    const resp=await fetch("/signup", {
       method: "POST",
       headers:{
         "content-type": "application/json",
       },
       body: JSON.stringify(new_user),
     })
-    .then((res)=> res.json())
-    .then((data)=> setUser(data))
-    navigate('/login')
+    try{
+      if(resp.ok){
+        const data= await resp.json()
+        navigate('/login')
+        console.log(data)
+      }else{
+          const data=await resp.json()
+          alert(data.error)
+      }}
+    catch(error){
+      console.log(error)
+    }
   }
+
+    
 
   return (
     <div className="flex justify-center items-center h-screen">

@@ -13,17 +13,18 @@ class Signup(Resource):
     #     else:
     #         return {'message': '401: Not Authorized'}, 401
     def post(self):
-        data = request.get_json()
-        is_artist = data.get('is_artist')
-        new_user = User(
-                username = data['username'],
-                password_hash = data['_password_hash'],
-                email = data['email'],
-                city = data['city'],
-                address = data['address'],
-                state = data['state'],
-            )
+        
         try:
+            data = request.get_json()
+            is_artist = data.get('is_artist')
+            new_user = User(
+                    username = data['username'],
+                    password_hash = data['_password_hash'],
+                    email = data['email'],
+                    city = data['city'],
+                    address = data['address'],
+                    state = data['state'],
+                )
             db.session.add(new_user)
             db.session.flush()  # Flush to get the user's id before committing the transaction
 
@@ -35,8 +36,9 @@ class Signup(Resource):
 
             response = make_response(new_user.to_dict(), 200)
             return response
-        except:
-            return {"message": "User not created"}
+        
+        except Exception as e:
+            return make_response({"error":e.__str__()}, 422)
 
 api.add_resource(Signup, '/signup')
 
@@ -91,26 +93,28 @@ class Events(Resource):
         user_id = session.get('user_id')
         artist = Artist.query.filter(Artist.user_id == user_id).first()
 
-        if not artist:
-            return make_response({'message':'Artist not found'}, 404)
+        # if not artist:
+        #     return make_response({'message':'Artist not found'}, 404)
         
-        data = request.get_json()
-        new_event = Event(
-            artist = artist, 
-            venue = data['venue'], 
-            time = data['time'], 
-            date= data['date'], 
-            image = data['image'], 
-            city= data['city'],
-            address = data['address'],
-            genre = data['genre'],
-            price = data['price'], 
-            link = data['link'],
+        try:
+            data = request.get_json()
+            new_event = Event(
+                artist = artist, 
+                venue = data['venue'], 
+                time = data['time'], 
+                date= data['date'], 
+                image = data['image'], 
+                city= data['city'],
+                address = data['address'],
+                genre = data['genre'],
+                price = data['price'], 
+                link = data['link'],
             )
-        db.session.add(new_event)
-        db.session.commit()
-        
-        return make_response(new_event.to_dict(), 200)
+            db.session.add(new_event)
+            db.session.commit()
+            return make_response(new_event.to_dict(), 200)
+        except Exception as e:
+            return make_response({"error":e.__str__()}, 422)
     
 api.add_resource(Events, '/concerts')
 

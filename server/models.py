@@ -32,7 +32,43 @@ class User(db.Model, SerializerMixin):
     def authenticate(self, password):
         return bcrypt.check_password_hash(
             self._password_hash, password.encode('utf8'))
-        
+    
+
+    @validates("username")
+    def validates_username(self, key, value):
+        if not value:
+            raise ValueError("Must include Username")
+        return value 
+
+    @validates("password_hash")
+    def validates_password_hash(self, key, value):
+        if not value:
+            raise ValueError("Must include Password")
+        return value
+
+    @validates("email")
+    def validates_email(self, key, value):
+        if not value:
+            raise ValueError('Must include Email')
+        return value
+
+    @validates("city")
+    def validates_city(self, key, value):
+        if not value:
+            raise ValueError('Must include city')
+        return value
+
+    @validates("address")
+    def validates_address(self, key, value):
+        if not value:
+            raise ValueError("Must include address")
+        return value    
+
+    @validates("state") 
+    def validates_state(self, key, value):
+        if len(value) > 2:
+            raise ValueError("Must be a state code of two letters")
+        return value
 
 class Artist(db.Model, SerializerMixin):
     __tablename__ = 'artists'
@@ -65,6 +101,50 @@ class Event(db.Model, SerializerMixin):
     artist = db.relationship("Artist", back_populates = "events")
 
     serialize_rules = ('-artist.events', )
+
+    @validates('venue')
+    def validate_venue(self,key, value):
+        if not value:
+            raise ValueError('Venue must be provided')
+        return value
+        
+    @validates('time')
+    def validate_time(self, key, value):
+        if not value:
+            raise ValueError('Time must be provided')
+        return value
+        
+    @validates('date')
+    def validate_data(self, key, value):
+        if not value:
+            raise ValueError('Date must be provided')
+        return value
+    
+    @validates('city')
+    def validates_city(self, key, value):
+        if not value:
+            raise ValueError('City must be provided')
+        return value
+    
+    @validates('address')
+    def validates_address(self, key, value):
+        if not value:
+            raise ValueError('Address must be provided')
+        return value
+    
+    @validates('genre')
+    def validates_genre(self, key, value):
+        if not value:
+            raise ValueError('Genre must be provided')
+        return value
+    
+    @validates('price')
+    def validates_price(self, key, value):
+        if not value:
+            raise ValueError("Price must be provided")
+        return value
+     
+
 
 
 class Genre(db.Model, SerializerMixin):

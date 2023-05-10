@@ -16,7 +16,7 @@ function UpcomingEventsList({ events }) {
           event={{
             imageUrl: event.imageUrl,
             name: event.name,
-            artistName: '',
+            artistName: "",
             venueName: event.venue,
             venueAddress: event.venueAddress,
             date: event.date,

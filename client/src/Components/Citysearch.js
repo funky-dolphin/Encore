@@ -107,11 +107,11 @@ import APIKEY from '../config'
           paddingTop: '10%',
         }}
       />
-      <div className="pt-16 w-full px-4">
+      <div className="pt-16 w-full px-4 justify-center">
         <form onSubmit={handleSearch} className="w-full">
-          <div className="flex items-center border-b-2 py-2">
+          <div className="flex items-center border-b-2 py-2 justify-center">
           <input
-        className="appearance-none bg-transparent border-none w-64 text-black mr-3 py-1 px-2 leading-tight focus:outline-none"
+        className="appearance-none bg-transparent border-none w-64 text-black mr-3 py-2 px-2 leading-tight focus:outline-none rounded-md"
         type="text"
         placeholder="Enter City"
       />

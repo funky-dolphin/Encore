@@ -48,31 +48,31 @@ function ConcertDetails() {
 
 
     return (
-        <div className="bg-c1 text-black w-full flex flex-col items-center justify-center py-12 mt-0 w-full min-h-screen ">
+        <div className="bg-c1 text-black flex flex-col items-center justify-center py-12 mt-0 w-full min-h-screen ">
           {event && (
             <div className="max-w-2xl w-full space-y-8 ">
               {event.imageUrl && (
-                <div className="w-full h-96 overflow-hidden rounded-lg relative bg-c3">
+                <div className="w-full h-96 overflow-hidden rounded-lg relative bg-c1">
                   <img className="w-full h-full object-cover absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" 
                     src={event.imageUrl} 
                     alt={event.name} 
-                    style={{objectFit: 'contain'}}/>
+                  />
                 </div>
               )}
-           <div className="bg-gray-100 p-8 rounded-lg shadow-md bg-c3 text-center">
-  <h1 className="text-4xl text-center font-bold mb-4 text-c2">{event.name}</h1>
+           <div className=" p-8 rounded-lg shadow-md bg-c5 text-center">
+  <h1 className="text-5xl text-center font-extrabold mb-4 text-c6">{event.name}</h1>
   <div className="space-y-3">
-    <p className="text-lg font-medium mb-3">Date: <span className="text-c2 font-semibold">{event.date}</span></p>
-    <p className="text-lg font-medium mb-3">Time: <span className="text-c2 font-semibold">{new Date(event.date + "T" + event.time).toLocaleTimeString([],{hour:'numeric', minute:'2-digit'})}</span></p>
-    <p className="text-lg font-medium mb-3">Venue: <span className="text-c2 font-semibold">{event.venue}</span></p>
-    <p className="text-lg font-medium mb-3">{event.location}</p>
-    <p className="text-lg font-medium mb-3">Address: <span className="text-c2 font-semibold">{event.address}</span></p>
-    <p className="text-lg font-medium mb-3">Genre: <span className="text-c2 font-semibold">{event.genre}</span></p>
-    <p className="text-lg font-medium mb-3">Price: <span className="text-c2 font-semibold">{event.priceRange}</span></p>
+    <p className="text-lg font-medium mb-3">Date: <span className="text-c1 text-2xl font-semibold">{event.date}</span></p>
+    <p className="text-lg font-medium mb-3">Time: <span className="text-c1 text-2xl font-semibold">{new Date(event.date + "T" + event.time).toLocaleTimeString([],{hour:'numeric', minute:'2-digit'})}</span></p>
+    <p className="text-lg font-medium mb-3">Venue: <span className="text-c1 text-2xl font-semibold">{event.venue}</span></p>
+    <p className="text-lg font-medium mb-3">Location: <span className ="text-c1 text-2xl font-semibold">{event.location}</span></p>
+    <p className="text-lg font-medium mb-3">Address: <span className="text-c1 text-2xl font-semibold">{event.address}</span></p>
+    <p className="text-lg font-medium mb-3">Genre: <span className="text-c1 text-2xl font-semibold">{event.genre}</span></p>
+    <p className="text-lg font-medium mb-3">Price: <span className="text-c1 text-2xl font-semibold">{event.priceRange}</span></p>
   </div>
 </div>
-              <div>
-                <a href={event.ticketURL} className="bg-c3 hover:bg-red-800 text-white font-bold py-4 px-6">
+              <div className='flex justify-center'>
+                <a href={event.ticketURL} className="bg-c3 hover:bg-c4 text-xl font-bold py-4 px-6 rounded">
                   Buy Tickets
                 </a>
               </div>

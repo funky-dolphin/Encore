@@ -31,7 +31,7 @@ useEffect(() => {
   const fetchEvents = (searchedCity, page=0) => {
     const today = new Date();
     const formattedDate = today.toISOString().slice(0, 10);
-    const apiURL = `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${APIKEY}&classificationName=music&segmentName=Music&startDateTime=${formattedDate}T00:00:00Z&sort=date,asc&locale=*&size=50&page=${page}&city=${searchedCity}&countryCode=US&keyword=${keyword}`
+    const apiURL = `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${APIKEY}&classificationName=music&segmentName=Music&startDateTime=${formattedDate}T00:00:00Z&sort=date,asc&locale=*&size=51&page=${page}&city=${searchedCity}&countryCode=US&keyword=${keyword}`
 
 
     fetch(apiURL)
@@ -110,7 +110,7 @@ useEffect(() => {
 
 
   return (
-    <div className = "flex flex-col h-screen">
+    <div className = "flex flex-col h-screen ">
       <form onSubmit={handleSearchSubmit} className="mb-4">
         <input
           type="text"
@@ -131,10 +131,10 @@ useEffect(() => {
                 
             ))}
       </div>
-
-      <div className="w-full flex justify-between items-center mt-4">
+      <div className='w-full felx justify-between items-center'>
+      <div className="w-full flex justify-between items-center mt-2 mb-4" >
   <button
-    className="bg-c3 hover:bg-red-800 text-white font-bold py-3 px-5 rounded"
+    className="bg-c3 hover:bg-red-800 text-white font-bold py-3 px-5 rounded ml-3"
     onClick={handlePreviousPage}
     disabled={currentPage === 0}
   >
@@ -142,11 +142,12 @@ useEffect(() => {
   </button>
 
   <button
-    className="bg-c3 hover:bg-red-600 text-white font-bold py-3 px-5 rounded"
+    className="bg-c3 hover:bg-red-600 text-white font-bold py-3 px-5 rounded mr-3"
     onClick={handleNextPage}
   >
     Next
   </button>
+</div>
 </div>
     </div>
   );
