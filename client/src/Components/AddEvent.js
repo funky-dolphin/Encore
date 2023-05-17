@@ -164,7 +164,7 @@ function AddEventCard({user}){
             </div>
             <div className="flex items-center justify-between">
             <button
-            className="bg-red-600 hover:bg-red-800 text-white font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-c3 hover:bg-c4 font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit">
                 Publish
               </button>

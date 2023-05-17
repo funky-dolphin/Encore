@@ -68,6 +68,8 @@ class User(db.Model, SerializerMixin):
     def validates_state(self, key, value):
         if len(value) > 2:
             raise ValueError("Must be a state code of two letters")
+        elif not value:
+            raise ValueError("Must include State")
         return value
 
 class Artist(db.Model, SerializerMixin):

@@ -68,18 +68,21 @@ function Venues({ user }) {
 
   return (
     <div className = "flex flex-col h-screen">
-      <form onSubmit={handleSearchSubmit} className="mb-4">
-        <input
-          type="text"
-          value={keyword}
-          onChange={handleKeywordChange}
-          placeholder="Search venues by keyword..."
-          className="border-2 border-gray-300 rounded p-2 w-full mb-2"
-        />
-        <button type="submit" className="bg-red-600 text-black rounded p-2 w-full">
-          Search
-        </button>
-      </form>
+     <form onSubmit={handleSearchSubmit} className="mb-2 my-1 flex">
+  <input
+    type="text"
+    value={keyword}
+    onChange={handleKeywordChange}
+    placeholder="Search venues by keyword..."
+    className="rounded-l w-5/6"
+  />
+  <button
+    type="submit"
+    className="bg-c3 text-black hover:bg-c4 rounded-r w-1/6"
+  >
+    Search
+  </button>
+</form>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {venues.map((venue, index) => (
           <Link to={`/venue/${venue.id}`} key={index}>

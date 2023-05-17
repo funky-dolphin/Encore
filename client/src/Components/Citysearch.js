@@ -123,7 +123,7 @@ import APIKEY from '../config'
             </button>
           </div>
         </form>
-        <div className="flex flex-wrap items-center justify-center w-full">
+        <div className="flex flex-wrap justify-center items-center w-full">
           <button
             className="bg-c3 hover:bg-c4 text-black font-bold py-2 px-4 rounded mr-4 mt-4"
             onClick={handlePrevPage}
