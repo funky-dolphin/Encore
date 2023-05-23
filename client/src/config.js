@@ -1,4 +1,4 @@
-const APIKEY = process.env.api_key;
+const APIKEY = os.getenv(api_key);
 
 
 export default APIKEY
