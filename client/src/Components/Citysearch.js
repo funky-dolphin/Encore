@@ -28,7 +28,7 @@ import APIKEY from '../config'
   const fetchEvents = (searchedCity, page=0) => {
     const today = new Date();
     const formattedDate = today.toISOString().slice(0, 10);
-    const apiURL = `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${APIKEY}&classificationName=music&segmentName=Music&startDateTime=${formattedDate}T00:00:00Z&sort=date,asc&locale=*&size=50&page=${page}&city=${searchedCity}&countryCode=US`
+    const apiURL = `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${process.env.APIKEY}&classificationName=music&segmentName=Music&startDateTime=${formattedDate}T00:00:00Z&sort=date,asc&locale=*&size=50&page=${page}&city=${searchedCity}&countryCode=US`
 
 
     fetch(apiURL)

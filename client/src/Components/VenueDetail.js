@@ -11,7 +11,7 @@ function VenueDetail() {
 
     const fetchVenueDetails = (venueId) => {
       fetch(
-        `https://app.ticketmaster.com/discovery/v2/venues/${venueId}.json?apikey=${APIKEY}`)
+        `https://app.ticketmaster.com/discovery/v2/venues/${venueId}.json?apikey=${process.env.APIKEY}`)
         .then((response) => response.json())
         .then((data) => {
           console.log(data)
