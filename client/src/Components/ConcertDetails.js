@@ -12,7 +12,7 @@ function ConcertDetails() {
 
   const fetchEventDetails = (eventId) => {
     fetch(
-      `https://app.ticketmaster.com/discovery/v2/events/${eventId}.json?apikey=${process.env.APIKEY}&priceRanges=true`
+      `https://app.ticketmaster.com/discovery/v2/events/${eventId}.json?apikey=${APIKEY}&priceRanges=true`
     )
       .then((response) => response.json())
       .then((data) => {

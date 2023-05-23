@@ -28,7 +28,7 @@ function Venues({ user }) {
     const stateCodeParam = stateCode ? `&stateCode=${stateCode}` : "";
     const keywordParam = keyword ? `&keyword=${keyword}` : "";
 
-    const apiURL = `https://app.ticketmaster.com/discovery/v2/venues.json?apikey=${process.env.APIKEY}${stateCodeParam}${keywordParam}`;
+    const apiURL = `https://app.ticketmaster.com/discovery/v2/venues.json?apikey=${APIKEY}${stateCodeParam}${keywordParam}`;
     fetch(apiURL)
       .then((response) => response.json())
       .then((data) => {
