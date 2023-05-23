@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function AddEventCard({user}){
     const [addVenueName, setVenueName] = useState('')
@@ -12,6 +13,7 @@ function AddEventCard({user}){
     const[successMessage, setSuccessmessage] = useState('')
     const [addDate, setDate] = useState('')
     const [error, setError] = useState('')
+    const navigate = useNavigate()
 
 
     async function handleSubmit(e){
@@ -40,6 +42,7 @@ function AddEventCard({user}){
         })
         if(res.ok){
           alert("success")
+          navigate('/amateur')
 
         }else{
           const data = await res.json()

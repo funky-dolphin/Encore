@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
-function AmateurEventDetails(){
+function AmateurEventDetails({user}){
     const {id}  = useParams();
     const [amEvent, setAmEvent] = useState({});
+    const navigate = useNavigate()
 
     useEffect(()=>{
         fetchAmEventDetails(id)
@@ -13,9 +14,10 @@ function AmateurEventDetails(){
         fetch (`/amateur_events/${eventId}`)
         .then((res)=> res.json())
         .then ((data)=>{
+          console.log(data)
             const amEvent = {
                 id : data.id, 
-                name: data.artist.band_name, 
+                name: data.artist.band_name,  
                 city: data.city, 
                 date: data.date, 
                 image: data.image, 
@@ -32,6 +34,27 @@ function AmateurEventDetails(){
         .catch((error) => console.log(error));
     }
 console.log(amEvent)
+console.log(user)
+    function handleDelete(){
+      fetch(`/amateur_events/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => res.json())
+      .then((data)=>{
+        navigate('/amateur')
+        alert("Event Deleted")
+      })
+      
+
+    }
+
+    function handleEditClick(){
+      navigate(`/amateur_events/edit/${id}`)
+    }
+
 
     return(
         <div className="bg-c1 text-black w-full flex flex-col items-center justify-center py-12 mt-0">
@@ -56,9 +79,17 @@ console.log(amEvent)
                 <p className="text-lg font-semibold mb-3">Price: <span className="text-c1 text-2xl font-semibold"> ${amEvent.price}</span></p>
               </div>
               <div className='flex justify-center'>
-                <a href={amEvent.link} className="bg-c3 hover:bg-c4 text-xl font-bold py-4 px-6 rounded-md">
+                <a href={amEvent.link} target = "_blank" rel="noopener noreferrence" className="bg-c3 hover:bg-c4 text-xl font-bold py-4 px-6 rounded-md">
                   Social Media
                 </a>
+                {user && user.artist && user.artist[0] && user.artist[0].band_name == amEvent.name ?
+                <button onClick = {handleDelete} className = "bg-c3 hover:bg-c4 text-xl font-bold py-4 px-6 ml-2 rounded-md">Delete</button> :
+                <> </>
+                }
+                 {user && user.artist && user.artist[0] && user.artist[0].band_name == amEvent.name ?
+                <button onClick = {handleEditClick} className = "bg-c3 hover:bg-c4 text-xl font-bold py-4 px-6 ml-2 rounded-md">Edit Event</button> :
+                <> </>
+                }
               </div>
             </div>
           )}

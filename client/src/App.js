@@ -11,6 +11,7 @@ import ConcertDetails from "./Components/ConcertDetails";
 import Amateur from "./Components/Amateur_spotlight";
 import AddEventCard from "./Components/AddEvent";
 import AmateurEventDetails from "./Components/AmateurEventDeatils";
+import EditEvent from "./Components/EditEvent";
 
 
 function App() {
@@ -48,7 +49,9 @@ const isUserSignedin  = !!user
       <Route path = '/event/:id' element={<ConcertDetails/>}/>
       <Route path = '/amateur' element = {<Amateur user={user}/>} />
       <Route path = '/addevent' element={<AddEventCard user = {user}/>}/>
-      <Route path = '/amateur_events/:id' element={<AmateurEventDetails/>}/>
+      <Route path = '/amateur_events/:id' element={<AmateurEventDetails user ={user} />}/>
+      <Route path = '/amateur_events/edit/:id' element={<EditEvent user={user}/>}/>
+      
     </Routes>
     </div>
   </BrowserRouter>

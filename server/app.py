@@ -125,27 +125,36 @@ class Events_by_id(Resource):
             return make_response({'message': "No Event"})
         return make_response(event.to_dict(), 200)
     
+
     def patch(self, id):
-        if not session['user.artist_id']:
-            return {'message': 'must be an artist'}
+        user_id = session.get("user_id")
+        user = User.query.filter_by(id=user_id).first()
         event = Event.query.filter_by(id = id).first()
-        data = request.get_json()
-        for attr in data:
-            setattr(event, attr, data[attr])
-        db.session.add(event)
-        db.session.commit()
-        return make_response(event.to_dict(), 200)
+
+        if event.artist.id == user.artist[0].id:
+            data = request.get_json()
+
+            for attr in data:
+                setattr(event, attr, data[attr])
+
+            db.session.add(event)
+            db.session.commit()
+
+            return make_response(event.to_dict(), 200)
+        return make_response({'message':'Not your event'}, 404)
     
     def delete(self, id):
-        if not session['user.artist_id']:
-            return {'message': 'must be an artist'}
-        
+        user_id = session.get("user_id")
+        user = User.query.filter_by(id=user_id).first()
         event = Event.query.filter_by(id = id).first()
-        if not event:
-            return make_response({'message': "No Event"})
-        db.session.delete(event)
-        db.session.commit()
-        return make_response({'message':'event deleted successfully'})
+  
+
+        if event.artist.id == user.artist[0].id:
+            db.session.delete(event)
+            db.session.commit()
+            return make_response({'message': 'Event deleted successfully'}, 200)
+        return make_response({'message': 'Not your event'}, 404)
+
     
 api.add_resource(Events_by_id, '/amateur_events/<int:id>')
 

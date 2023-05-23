@@ -25,6 +25,8 @@ function ConcertDetails() {
         const state = venue.state ? venue.state.stateCode : 'N/A';
         const zip = venue.postalCode ? venue.postalCode : 'N/A';
         const venueAddress = `${city}, ${state}  ${zip}`;
+        const instagram = data._embedded?.attractions?.[0]?.externalLinks?.instagram?.[0]?.url || null;
+        const spotify = data._embedded?.attractions?.[0]?.externalLinks?.spotify?.[0]?.url || null;
           const eventDetails = {
           id: data.id,
           name: data.name,
@@ -36,15 +38,16 @@ function ConcertDetails() {
           address: `${data._embedded.venues[0].address?.line1 || 'No address given'}`,
           genre: data.classifications[0].genre.name,
           priceRange: data.priceRanges ? `${data.priceRanges[0].min} - ${data.priceRanges[0].max} ${data.priceRanges[0].currency}` : 'N/A',
-          ticketURL: data.url
+          ticketURL: data.url,
+          insta: instagram || null, 
+          spotify_link: spotify || null
         };
 
         setEvent(eventDetails);
       })
       .catch((error) => console.log(error));
   };
-
-  
+       console.log(event)
 
 
     return (
@@ -72,9 +75,17 @@ function ConcertDetails() {
   </div>
 </div>
               <div className='flex justify-center'>
-                <a href={event.ticketURL} className="bg-c3 hover:bg-c4 text-xl font-bold py-4 px-6 rounded">
+                <a href={event.ticketURL} target = "_blank" rel="noopener noreferrence" className="bg-c3 hover:bg-c4 text-xl font-bold py-4 px-6 ml-2 rounded">
                   Buy Tickets
                 </a>
+                {event && event.insta ?
+                <a href={event.insta} target = "_blank" rel="noopener noreferrence" className="bg-c3 hover:bg-c4 text-xl font-bold py-4 px-6 ml-2  rounded">
+                  Instagram
+                </a> : null}
+                {event && event.spotify_link ?
+                <a href={event.spotify_link} target = "_blank" rel="noopener noreferrence" className="bg-c3 hover:bg-c4 text-xl font-bold py-4 px-6 ml-2  rounded">
+                  Spotify
+                </a> : null}
               </div>
             </div>
           )}
