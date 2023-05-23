@@ -10,6 +10,7 @@ import APIKEY from '../config'
     const [searchedCity, setSearchedCity] = useState('')
   
     const isUserSignedIn = !!user;
+
   
     const getCity = () => {
       if (searchedCity) {

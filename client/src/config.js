@@ -1,4 +1,4 @@
-const APIKEY = process.env.apikey;
+const APIKEY = process.env.api_key;
 
 
-export default APIKEY 
+export default APIKEY
