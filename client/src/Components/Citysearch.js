@@ -8,9 +8,11 @@ import {Link} from 'react-router-dom'
     const [events, setEvents] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
     const [searchedCity, setSearchedCity] = useState('')
-    const APIKEY = process.env.api_key
+
+    const APIKEY = process.env.API_KEY
   
     const isUserSignedIn = !!user;
+
     console.log(APIKEY)
 
   
