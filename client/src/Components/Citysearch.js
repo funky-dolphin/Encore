@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import EventCard from './EventCard';
 import {Link} from 'react-router-dom'
-import APIKEY from '../config'
+// import APIKEY from '../config'
 
 
   const CitySearch = ({ setUser, user }) => {
     const [events, setEvents] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
     const [searchedCity, setSearchedCity] = useState('')
+    const APIKEY = process.env.api_key
   
     const isUserSignedIn = !!user;
 
