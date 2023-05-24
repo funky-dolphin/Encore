@@ -11,6 +11,7 @@ import {Link} from 'react-router-dom'
     const APIKEY = process.env.api_key
   
     const isUserSignedIn = !!user;
+    console.log(APIKEY)
 
   
     const getCity = () => {
