@@ -2,7 +2,7 @@ from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.hybrid import hybrid_property
-from config import bcrypt, db, app
+from config import hashing, db, app
 
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
@@ -25,13 +25,13 @@ class User(db.Model, SerializerMixin):
     
     @password_hash.setter
     def password_hash(self, password):
-        password_hash = bcrypt.generate_password_hash(password.encode('utf8'))
-        self._password_hash = password_hash.decode('utf8')
+        password_hash = hashing.hash_value(password)
+        self._password_hash = password_hash
 
     
     def authenticate(self, password):
-        return bcrypt.check_password_hash(
-            self._password_hash, password.encode('utf8'))
+        return hashing.check_value(
+            self._password_hash, password)
     
 
     @validates("username")

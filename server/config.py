@@ -1,5 +1,5 @@
 from flask import Flask
-from flask_bcrypt import Bcrypt
+from flask_hashing import Hashing
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 from flask_migrate import Migrate
@@ -12,7 +12,7 @@ metadata = MetaData(naming_convention={
 db = SQLAlchemy(metadata = metadata) 
 
 app = Flask(__name__)
-bcrypt = Bcrypt(app)
+hashing = Hashing(app)
 CORS(app)
 
 app.config['SECRET_KEY']='encore'
