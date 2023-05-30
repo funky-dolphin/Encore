@@ -2,6 +2,7 @@ from flask import request, make_response, jsonify, session
 from flask_restful import Resource, Api
 from models import db, User, Event, Artist
 from config import app, bcrypt
+import os
 
 api = Api(app)
 
@@ -163,4 +164,4 @@ api.add_resource(Events_by_id, '/amateur_events/<int:id>')
 
 
 if __name__ == '__main__':
-    app.run(port=5555, debug=True)   
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))   
