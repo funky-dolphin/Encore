@@ -1,7 +1,7 @@
 from flask import request, make_response, jsonify, session
 from flask_restful import Resource, Api
 from models import db, User, Event, Artist
-from config import app, bcrypt
+from config import app
 import os
 
 api = Api(app)
