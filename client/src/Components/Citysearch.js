@@ -5,6 +5,10 @@ import APIKEY from '../config'
 
 
   const CitySearch = ({ setUser, user }) => {
+
+    require ('dotenv').config()
+    const APIKEY = process.env.REACT_APP_API_KEY;
+
     const [events, setEvents] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
     const [searchedCity, setSearchedCity] = useState('')

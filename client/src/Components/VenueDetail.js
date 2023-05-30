@@ -4,6 +4,10 @@ import APIKEY from '../config';
 import UpcomingEventsList from './UpcomingEventsList';
 
 function VenueDetail() {
+  
+  require ('dotenv').config()
+  const APIKEY = process.env.REACT_APP_API_KEY;
+
     const { id } = useParams();
     const [venue, setVenue] = useState({});
     const [showUpcomingEvents, setShowUpcomingEvents] = useState(false);
