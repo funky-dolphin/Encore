@@ -33,7 +33,7 @@ function AddEventCard({user}){
           date: addDate,
         }
         console.log(new_event)
-        const res = await fetch('/concerts',{
+        const res = await fetch('https://encore-concerts.onrender.com/concerts',{
           method: "POST",
           headers:{
             "Content-Type": "application/json"

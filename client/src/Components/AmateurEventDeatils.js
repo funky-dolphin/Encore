@@ -11,7 +11,7 @@ function AmateurEventDetails({user}){
     },[id])
 
     const fetchAmEventDetails = (eventId) => {
-        fetch (`/amateur_events/${eventId}`)
+        fetch (`https://encore-concerts.onrender.com/amateur_events/${eventId}`)
         .then((res)=> res.json())
         .then ((data)=>{
           console.log(data)
@@ -36,7 +36,7 @@ function AmateurEventDetails({user}){
 console.log(amEvent)
 console.log(user)
     function handleDelete(){
-      fetch(`/amateur_events/${id}`, {
+      fetch(`https://encore-concerts.onrender.com/amateur_events/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
