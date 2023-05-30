@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import APIKEY from '../config';
+// import APIKEY from '../config';
 
 function ConcertDetails() {
 
-  require ('dotenv').config()
+
   const APIKEY = process.env.REACT_APP_API_KEY;
-  
+
   const { id } = useParams();
   const [event, setEvent] = useState({});
 

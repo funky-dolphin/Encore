@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import EventCard from './EventCard';
 import { Link } from 'react-router-dom'
-import APIKEY from '../config'
+// import APIKEY from '../config'
 
 
 const Concerts = ({ user, setUser }) => {
@@ -10,6 +10,9 @@ const Concerts = ({ user, setUser }) => {
   const [currentPage, setCurrentPage] = useState(0)
   const [searchedCity, setSearchedCity] = useState('')
   const [isExpanded, setIsExpanded] = useState(false);
+
+  const APIKEY = process.env.REACT_APP_API_KEY;
+
 
   const isUserSignedIn = !!user
 

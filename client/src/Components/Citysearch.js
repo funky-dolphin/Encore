@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import EventCard from './EventCard';
 import {Link} from 'react-router-dom'
-import APIKEY from '../config'
+// import APIKEY from '../config'
 
 
   const CitySearch = ({ setUser, user }) => {
 
-    require ('dotenv').config()
+   
     const APIKEY = process.env.REACT_APP_API_KEY;
 
     const [events, setEvents] = useState([]);

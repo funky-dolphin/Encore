@@ -1,11 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import VenueCard from './VenueCard';
 import {Link} from 'react-router-dom'
-import APIKEY from '../config';
+// import APIKEY from '../config';
 
 function Venues({ user }) {
   const [venues, setVenues] = useState([]);
   const [keyword, setKeyword] = useState("");
+
+  const APIKEY = process.env.REACT_APP_API_KEY
 
   const isUserSignedIn = !!user;
 
