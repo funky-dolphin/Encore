@@ -18,14 +18,15 @@ class Signup(Resource):
         try:
             data = request.get_json()
             is_artist = data.get('is_artist')
+            password = data.get('_password_hash')
             new_user = User(
                     username = data['username'],
-                    password_hash = data['_password_hash'],
                     email = data['email'],
                     city = data['city'],
                     address = data['address'],
                     state = data['state'],
                 )
+            new_user.password_hash = password
             db.session.add(new_user)
             db.session.flush()  # Flush to get the user's id before committing the transaction
 
