@@ -3,10 +3,12 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 from flask_migrate import Migrate
 from flask_cors import CORS
+from flask_hashing import Hashing
 
 metadata = MetaData(naming_convention={
     "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
 })
+hashing = Hashing()
 
 db = SQLAlchemy(metadata = metadata) 
 
@@ -20,3 +22,4 @@ app.json.compact = False
 
 migrate = Migrate(app, db)
 db.init_app(app)
+hashing.init_app(app)
