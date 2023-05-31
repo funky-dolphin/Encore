@@ -26,6 +26,8 @@ class Signup(Resource):
                     address = data['address'],
                     state = data['state'],
                 )
+            print(f"Type of password: {type(data['password'])}")
+            print(f"Value of password: {data['password']}")
             db.session.add(new_user)
             db.session.flush()  # Flush to get the user's id before committing the transaction
 
