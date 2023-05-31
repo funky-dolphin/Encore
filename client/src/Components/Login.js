@@ -23,7 +23,7 @@ function Login({setUser}) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username: username, password: password })
     };
-    fetch('/login', loginUser)
+    fetch('https://encore-concerts.onrender.com/login', loginUser)
     .then(response => {
       if (!response.ok){
         throw new Error(`Error: ${response.status} - ${response.statusText}`);
