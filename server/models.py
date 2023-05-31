@@ -2,7 +2,10 @@ from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.hybrid import hybrid_property
-from config import hashing, db, app
+from config import db 
+from flask_hashing import Hashing
+
+hashing = Hashing()
 
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
