@@ -3,6 +3,7 @@ from flask_restful import Resource, Api
 from models import db, User, Event, Artist
 from config import app
 import os
+import traceback
 
 api = Api(app)
 
@@ -41,6 +42,7 @@ class Signup(Resource):
             return response
         
         except Exception as e:
+            print(traceback.format_exc())
             return make_response({"error":e.__str__()}, 422)
 
 api.add_resource(Signup, '/signup')
