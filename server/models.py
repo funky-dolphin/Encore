@@ -25,13 +25,13 @@ class User(db.Model, SerializerMixin):
     
     @password_hash.setter
     def password_hash(self, password):
-        password_hash = hashing.hash_value(password)
+        password_hash = hashing.hash_value(password.encode('utf-8'))
         self._password_hash = password_hash
 
     
     def authenticate(self, password):
         return hashing.check_value(
-            self._password_hash, password)
+            self._password_hash, password.encode('utf-8'))
     
 
     @validates("username")
