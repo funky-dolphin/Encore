@@ -18,7 +18,7 @@ function Signup({setUser}) {
     const new_user = {
       username : signupUsername, 
       email: signupEmail, 
-      _password_hash: signupPassword, 
+      password: signupPassword, 
       city: signupCity,
       address: signupAddress,
       state: signupState,

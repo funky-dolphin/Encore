@@ -20,7 +20,7 @@ class Signup(Resource):
             is_artist = data.get('is_artist')
             new_user = User(
                     username = data['username'],
-                    password_hash = data['_password_hash'],
+                    password_hash = data['password'],
                     email = data['email'],
                     city = data['city'],
                     address = data['address'],
