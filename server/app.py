@@ -7,12 +7,12 @@ import os
 api = Api(app)
 
 class Signup(Resource):
-    # def get(self):
-    #     user = User.query.filter(User.id == session.get('user_id')).first()
-    #     if user:
-    #         return user.to_dict()
-    #     else:
-    #         return {'message': '401: Not Authorized'}, 401
+    def get(self):
+        user = User.query.filter(User.id == session.get('user_id')).first()
+        if user:
+            return user.to_dict()
+        else:
+            return {'message': '401: Not Authorized'}, 401
     def post(self):
         
         try:
@@ -164,4 +164,4 @@ api.add_resource(Events_by_id, '/amateur_events/<int:id>')
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))   
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 2000)))
