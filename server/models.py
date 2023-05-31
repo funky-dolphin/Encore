@@ -30,7 +30,7 @@ class User(db.Model, SerializerMixin):
     def password_hash(self, password):
         if not password:
             raise ValueError("Password must be entered")
-        password_hash = hashing.hash_value(password)
+        password_hash = hashing.hash_value(password.encode('utf-8'))
         self._password_hash = password_hash
 
     def authenticate(self, password):
