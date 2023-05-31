@@ -28,6 +28,8 @@ class User(db.Model, SerializerMixin):
     
     @password_hash.setter
     def password_hash(self, password):
+        if not password:
+            raise ValueError("Password must be entered")
         encoded_password = password.encode('utf-8')
         password_hash = hashing.hash_value(encoded_password)
         self._password_hash = password_hash
@@ -41,12 +43,6 @@ class User(db.Model, SerializerMixin):
         if not value:
             raise ValueError("Must include Username")
         return value 
-
-    @validates("password_hash")
-    def validates_password_hash(self, key, value):
-        if not value:
-            raise ValueError("Must include Password")
-        return value
 
     @validates("email")
     def validates_email(self, key, value):
