@@ -28,7 +28,8 @@ class User(db.Model, SerializerMixin):
     
     @password_hash.setter
     def password_hash(self, password):
-        password_hash = hashing.hash_value(password.encode('utf-8'))
+        encoded = password.encode('utf-8')
+        password_hash = hashing.hash_value(encoded)
         self._password_hash = password_hash
 
     
