@@ -5,9 +5,6 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from config import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
-
-
-
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
     
