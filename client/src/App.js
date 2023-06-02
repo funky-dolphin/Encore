@@ -20,7 +20,7 @@ function App() {
   // const [zipCode, setZipCode] = useState("");
 
   useEffect(() => {
-    fetch("/check_session", {}).then((response) => {
+    fetch("https://encore-concerts.onrender.com/check_session", {}).then((response) => {
       if (response.ok) {
         response.json().then((userData) => {
           setUser(userData);
