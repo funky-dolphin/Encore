@@ -18,6 +18,8 @@ CORS(app)
 
 
 app.config['SECRET_KEY']='encore'
+app.config['SESSION_COOKIE_NAME'] = 'encore_cookie'
+app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
