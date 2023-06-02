@@ -2,7 +2,8 @@ from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.hybrid import hybrid_property
-from config import db, hashing
+from config import db
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 
@@ -21,7 +22,6 @@ class User(db.Model, SerializerMixin):
     artist = db.relationship("Artist", back_populates = "user")
     serialize_rules = ('-artist.user', )
 
-
     @hybrid_property
     def password_hash(self):
         return self._password_hash
@@ -30,12 +30,14 @@ class User(db.Model, SerializerMixin):
     def password_hash(self, password):
         if not password:
             raise ValueError("Password must be entered")
-        password_hash = hashing.hash_value(password.encode('utf-8'))
+        # encoded_password = password.encode('utf-8')
+        password_hash = generate_password_hash(password)
         self._password_hash = password_hash
 
     def authenticate(self, password):
-        encoded_password = password.encode('utf-8')
-        return hashing.check_value(self._password_hash, encoded_password)    
+        # encoded_password = password.encode('utf-8')
+        return check_password_hash(password, self._password_hash)
+  
 
     @validates("username")
     def validates_username(self, key, value):
