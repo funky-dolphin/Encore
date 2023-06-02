@@ -36,7 +36,7 @@ class User(db.Model, SerializerMixin):
 
     def authenticate(self, password):
         # encoded_password = password.encode('utf-8')
-        return check_password_hash(password, self._password_hash)
+        return check_password_hash(self._password_hash, password)
   
 
     @validates("username")
