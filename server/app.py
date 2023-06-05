@@ -15,7 +15,6 @@ class Signup(Resource):
         else:
             return {'message': '401: Not Authorized'}, 401
     def post(self):
-        
         try:
             data = request.get_json()
             is_artist = data.get('is_artist')
@@ -53,7 +52,6 @@ class Login(Resource):
         # print("Received data:", data)
         username = data['username']
         user = User.query.filter(User.username == username).first()
-        
         password = data['password']
 
         if not user:
@@ -64,7 +62,6 @@ class Login(Resource):
             print(session.get('user_id')," is the session data")
             return user.to_dict(), 200
         
-
 api.add_resource(Login, '/login')
 
 class CheckSession(Resource):
