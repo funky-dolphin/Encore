@@ -38,13 +38,13 @@ function VenueDetail() {
   
     useEffect(() => {
       fetchVenueDetails(id);
-    }, [id]);
+    }, [id, fetchVenueDetails]);
 
     useEffect(() => {
         if (showUpcomingEvents) {
           fetchUpcomingEvents(id);
         }
-      }, [showUpcomingEvents, id]);
+      }, [showUpcomingEvents, id, fetchUpcomingEvents]);
 
     const fetchUpcomingEvents = async (venueId) => {
         fetch(`https://app.ticketmaster.com/discovery/v2/events.json?venueId=${venueId}&segmentName=music&apikey=${APIKEY}&sort=date,asc`)

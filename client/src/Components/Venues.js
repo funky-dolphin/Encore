@@ -24,7 +24,7 @@ function Venues({ user }) {
     if (!keyword) {
       fetchVenues(getStateCode(), "");
     }
-  }, [isUserSignedIn]);
+  }, [isUserSignedIn, fetchVenues, getStateCode, keyword]);
 
   const fetchVenues = (stateCode, keyword) => {
     const stateCodeParam = stateCode ? `&stateCode=${stateCode}` : "";
