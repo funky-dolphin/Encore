@@ -4,8 +4,11 @@ from models import db, User, Event, Artist
 from config import app
 import os
 import traceback
+from flask_session import Session
 
+Session(app)
 api = Api(app)
+
 
 class Signup(Resource):
     def get(self):
