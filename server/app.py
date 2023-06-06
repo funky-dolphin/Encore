@@ -6,7 +6,6 @@ import os
 import traceback
 from flask_session import Session
 
-Session(app)
 api = Api(app)
 
 
@@ -163,9 +162,7 @@ class Events_by_id(Resource):
     
 api.add_resource(Events_by_id, '/amateur_events/<int:id>')
 
-
-
-
+Session(app)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 2000)))
