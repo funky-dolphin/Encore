@@ -10,7 +10,7 @@ metadata = MetaData(naming_convention={
 })
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, supports_credentials=True)
 
 app.config['SECRET_KEY']='encore'
 app.config['SESSION_COOKIE_NAME'] = 'encore_cookie'
