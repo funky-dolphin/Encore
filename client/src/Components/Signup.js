@@ -30,6 +30,7 @@ function Signup({setUser}) {
       headers:{
         "content-type": "application/json",
       },
+      credentials:'include',
       body: JSON.stringify(new_user),
     })
     try{
