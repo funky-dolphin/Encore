@@ -36,7 +36,7 @@ function EditEvent(){
         if(addPrice) dataToSend.price = addPrice
         if(addLink) dataToSend.link = addLink
 
-        fetch(`https://encore-concerts.onrender.com/amateur_events/${id}`,{
+        fetch(`/amateur_events/${id}`,{
             method: 'PATCH', 
             headers:{
                 "Content-Type": "application/json",

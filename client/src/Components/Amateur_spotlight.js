@@ -11,7 +11,7 @@ function Amateur({user}){
     }, [])
 
     function fetchAmateurEvents(){
-        fetch('https://encore-concerts.onrender.com/concerts')
+        fetch('/concerts')
         .then (res => res.json())
         .then(events => setAmEvents(mapData(events)))
     }

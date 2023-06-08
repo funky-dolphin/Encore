@@ -25,7 +25,7 @@ function Signup({setUser}) {
       is_artist : isArtist,
       band_name : signupBandName,
     }
-    const resp=await fetch("https://encore-concerts.onrender.com/signup", {
+    const resp=await fetch("/signup", {
       method: "POST",
       headers:{
         "content-type": "application/json",
