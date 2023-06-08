@@ -11,6 +11,7 @@ metadata = MetaData(naming_convention={
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
+Session(app)
 
 app.config['SECRET_KEY']='encore'
 app.config['SESSION_COOKIE_NAME'] = 'encore_cookie'
@@ -23,6 +24,8 @@ app.json.compact = False
 
 db = SQLAlchemy(metadata = metadata, app=app)
 migrate = Migrate(app, db)
+
+
 
 
 
