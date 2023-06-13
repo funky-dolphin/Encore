@@ -1,12 +1,20 @@
-from flask import request, make_response, jsonify, session
+from flask import request, make_response, jsonify, session, render_template
 from flask_restful import Resource, Api
 from models import db, User, Event, Artist
 from config import app
 import os
+
+
 import traceback
 # from flask_session import Session
 
 api = Api(app)
+app.secret_key = "nickisthebest"
+
+@app.route('/')
+@app.route('/<int:id>')
+def index(id=0):
+    return render_template("index.html")
 
 
 class Signup(Resource):
