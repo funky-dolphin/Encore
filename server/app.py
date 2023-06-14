@@ -12,7 +12,11 @@ api = Api(app)
 app.secret_key = "nickisthebest"
 
 @app.route('/')
+@app.route('/concerts')
+@app.route('/venues')
 @app.route('/<int:id>')
+@app.route('/login')
+@app.route('/siignup')
 def index(id=0):
     return render_template("index.html")
 
