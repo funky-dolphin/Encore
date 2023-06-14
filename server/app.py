@@ -16,7 +16,7 @@ app.secret_key = "nickisthebest"
 @app.route('/venues')
 @app.route('/<int:id>')
 @app.route('/login')
-@app.route('/siignup')
+@app.route('/signup')
 def index(id=0):
     return render_template("index.html")
 
